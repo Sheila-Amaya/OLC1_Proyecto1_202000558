@@ -1,0 +1,9 @@
+PROGRAM
+	! Declaracion simple
+
+	console::print = cadena, "OLC", modulo1 ,numero1 end;
+	<!
+		Salida en consola:
+			Ejemplo, OLC, 1, 2024
+	!>
+END PROGRAM
