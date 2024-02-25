@@ -1,12 +1,12 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Other/File.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Generador;
+package proyecto1;
 
 /**
  *
- * @author elizabeth
+ * @author amaya
  */
 public class GeneradorS {
     public static void main(String[] args)
@@ -32,7 +32,7 @@ public class GeneradorS {
         opciones[5] = "Sintactico"; 
         
         //Le decimos donde se encuentra el archivo .cup 
-        opciones[6] = "src/Analizadores/Sintactico.cup"; 
+        opciones[6] = "src/Analizadores/Parser.cup"; 
         try 
         {
             java_cup.Main.main(opciones);

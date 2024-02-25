@@ -1,13 +1,14 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Other/File.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
-package Generador;
+package proyecto1;
+
 import java.io.File;
 
 /**
  *
- * @author elizabeth
+ * @author amaya
  */
 public class GeneradorL {
 
@@ -17,6 +18,6 @@ public class GeneradorL {
     public static void main(String[] args) {
         jflex.Main.generate(
                 new File(
-                        "src/Analizadores/Lexico.jflex"));
+                        "src/Analizadores/Scanner.jflex"));
     }
 }

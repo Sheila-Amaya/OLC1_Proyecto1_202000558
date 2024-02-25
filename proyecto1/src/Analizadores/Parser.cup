@@ -1,0 +1,99 @@
+/* SINTACTICO */
+
+/* 1. package o importaciones */
+package Analizadores;
+import java_cup.runtime.*;
+import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
+import Errores.Excepcion;
+import Errores.ErrSin;
+
+/* 2. código para el parser, variables, métodos */
+
+// PARSER
+parser code
+{:
+
+    // clases, objetos, variables, listas, etc.
+    public List<String> salidas = new ArrayList<String>();
+
+    // errores
+    public ArrayList<ErrSin> Errores = new ArrayList();
+
+    // Método al que se llama automáticamente ante algún error sintáctico.
+    public void syntax_error(Symbol s) {
+        Errores.add(new ErrSin(s.value, s.left, s.right));
+    }
+
+    // Método al que se llama automáticamente ante algún error sintáctico
+    // en el que ya no es posible una recuperación de errores.
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception {
+        System.out.println("Error sintáctico irrecuperable en la Línea " + (s.left) + " Columna " + s.right + ". Componente " + s.value + " no reconocido.");
+    }
+
+    public String getErrores() {
+        return Errores.stream().map(Object::toString).collect(Collectors.joining("\n-> "));
+    }
+:}
+
+/* 3. terminales */
+terminal String PTCOMA, PAR_IZQ, PAR_DER, LLAV_IZQ, LLAV_DER, PT, DOS_PT, COMA, S, COR_IZQ, COR_DER;
+terminal String MAS, MENOS, POR, DIV;
+terminal String ASIGNACION, ACCESO;
+
+terminal String PROGRAM;
+terminal String END;
+
+terminal String CONSOLE;
+terminal String PRINT;
+
+terminal String CADENA;
+terminal String ID;
+terminal String ENTERO;
+terminal String DOUBLE;
+
+/* 4. No terminales */
+non terminal String ini;
+non terminal String declaraciones;
+non terminal String declaracion;
+non terminal String imprimir;
+non terminal String listas;
+non terminal String lista;
+non terminal String expresion;
+
+
+/* 5. precedencias operadores */
+precedence left MAS, MENOS;
+precedence left POR, DIV;
+
+/* 6. Reglas de producción para expresiones */
+start with ini;
+
+ini ::= PROGRAM declaraciones END PROGRAM
+;
+
+declaraciones ::= declaraciones declaracion
+                | declaracion
+;
+
+declaracion::= imprimir
+;
+
+imprimir ::= CONSOLE ACCESO PRINT ASIGNACION listas END PTCOMA
+;
+
+listas ::= listas expresion
+            | expresion
+;
+
+expresion ::= expresion:a MAS expresion:b {:RESULT = a + " + " + b;:}
+            | expresion:a MENOS expresion:b {:RESULT = a + " - " + b;:}
+            | expresion:a POR expresion:b {:RESULT = a + " * " + b;:}
+            | expresion:a DIV expresion:b {: RESULT = a + " / " + b; :}
+            | ID:a {:RESULT = a;:}
+            | CADENA:str {:RESULT = str;:}
+            | ENTERO: i {:RESULT = i;:}
+            | DOUBLE:a {:RESULT = a;:}
+
+;
