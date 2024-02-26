@@ -56,6 +56,7 @@ comentarioMultilineal = "<!"([^!]|(![^>]))*"!>"
 comentarioSimple = "!"[ \t]*[^\n\r]*
 
 
+
 %%
 
 /*3.Reglas semanticas, como se exportaran simbolos y terminales al cup */ 
@@ -104,5 +105,6 @@ comentarioSimple = "!"[ \t]*[^\n\r]*
 //Recuperar errores lexicos  
 . {
     //guarda los errores lexicos
+    System.out.println("Este es un error lexico: "+yytext()+ ", en la linea: "+yyline+", en la columna: "+yychar);
     Errores.add(new Excepcion("Lexico","Caracter no valido: "+ yytext(), yyline+"", yychar+""));
 }

@@ -8,17 +8,17 @@ public class Excepcion{
     public String columna; //columna donde se produce el error
 
 
-    public Excepcion(String tipo,String descripcion,String linea,String columna) {
+    public Excepcion (String tipo, String descripcion, String linea, String columna){
         this.tipo = tipo;
         this.descripcion = descripcion;
         this.linea = linea;
         this.columna = columna;
     }
-
-        @Override
-        public String toString() {
-            return this.tipo + ":" + this.descripcion + "en la linea" + this.linea + "y columna " + this.columna;
-        }
-
-
+    
+    
+    @Override
+    public String toString(){
+        return this.tipo + ": " + this.descripcion + " en la linea " + this.linea + " y columna " + this.columna;
+    }
+    
 }

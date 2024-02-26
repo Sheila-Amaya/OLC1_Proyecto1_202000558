@@ -1,4 +1,0 @@
-package interfaz;
-
-class ErrSin {
-}

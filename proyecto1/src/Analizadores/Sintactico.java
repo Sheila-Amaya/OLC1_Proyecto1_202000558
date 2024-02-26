@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 import java.util.ArrayList;
 import java.util.List;
 import Errores.Excepcion;
-import Errores.ErrSin;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -125,20 +124,20 @@ public class Sintactico extends java_cup.runtime.lr_parser {
     public List<String> salidas = new ArrayList<String>();
 
     // errores
-    public ArrayList<ErrSin> Errores = new ArrayList();
+    public ArrayList<Excepcion> Errores = new ArrayList();
 
     // Método al que se llama automáticamente ante algún error sintáctico.
-    public void syntax_error(Symbol s) {
-        Errores.add(new ErrSin(s.value, s.left, s.right));
-    }
+    public void syntax_error(Symbol s){ 
+        Errores.add(new Excepcion("Sintáctico", "Error de sintaxis detectado. Se detectó: " + s.value, s.left + "", s.right + ""));
+    } 
 
     // Método al que se llama automáticamente ante algún error sintáctico
     // en el que ya no es posible una recuperación de errores.
-    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception {
-        System.out.println("Error sintactico irrecuperable en la Linea " + (s.left) + " Columna " + s.right + ". Componente " + s.value + " no reconocido.");
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{ 
+        System.out.println("Error síntactico irrecuperable en la Línea " + (s.left)+ " Columna "+s.right+". Componente " + s.value + " no reconocido."); 
     }
 
-    public Collection<ErrSin> getErrores() {
+    public ArrayList<Excepcion> getErrores(){
         return Errores;
     }
 

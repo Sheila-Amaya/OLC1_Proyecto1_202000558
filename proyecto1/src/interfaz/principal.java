@@ -352,11 +352,10 @@ public class principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu8MouseClicked
 
     private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
-        // TODO add your handling code here:  
-        //------EJECUTAR------
+        // TODO add your handling code here:  //------EJECUTAR------
         Analizadores.scanner scanner; //.java
         Analizadores.Sintactico parse;
-        ArrayList<ErrSin> errores = new ArrayList(); //agregar errores
+        ArrayList<Excepcion> errores = new ArrayList(); //agregar errores
         ArrayList<TokenInfo> tokens = new ArrayList();
         
         try {
@@ -376,9 +375,6 @@ public class principal extends javax.swing.JFrame {
                 result += parse.salidas.get(i) + '\n';
             }
             this.jTextArea2.setText(result);
-            if (parse.Errores.size() > 0) {
-                this.jTextArea2.setText(parse.getErrores());
-            }
 
 
         } catch (Exception ex) {
