@@ -8,6 +8,8 @@ import Analizadores.scanner;
 import Errores.Excepcion;
 import java.awt.Desktop;
 import Token.TokenInfo;
+import proyecto1.GeneradorL;
+import proyecto1.GeneradorS;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -35,6 +37,12 @@ public class principal extends javax.swing.JFrame {
     private String archivoActual;
     public principal() {
         initComponents();
+         
+        // Llamada a GeneradorS
+        GeneradorS.main(new String[]{});
+
+        // Llamada a GeneradorL
+        GeneradorL.main(new String[]{});
     }
 
     /**
@@ -379,7 +387,7 @@ public class principal extends javax.swing.JFrame {
 
         } catch (Exception ex) {
             Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("Error fatal en compilación de entrada.");
+            System.out.println("Error fatal en compilación de entrada: " + ex.getMessage());
         }
                 
     }//GEN-LAST:event_jMenu4MouseClicked
