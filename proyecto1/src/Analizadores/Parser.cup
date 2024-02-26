@@ -29,11 +29,11 @@ parser code
     // Método al que se llama automáticamente ante algún error sintáctico
     // en el que ya no es posible una recuperación de errores.
     public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception {
-        System.out.println("Error sintáctico irrecuperable en la Línea " + (s.left) + " Columna " + s.right + ". Componente " + s.value + " no reconocido.");
+        System.out.println("Error sintactico irrecuperable en la Linea " + (s.left) + " Columna " + s.right + ". Componente " + s.value + " no reconocido.");
     }
 
-    public String getErrores() {
-        return Errores.stream().map(Object::toString).collect(Collectors.joining("\n-> "));
+    public Collection<ErrSin> getErrores() {
+        return Errores;
     }
 :}
 
@@ -70,11 +70,12 @@ precedence left POR, DIV;
 /* 6. Reglas de producción para expresiones */
 start with ini;
 
-ini ::= PROGRAM declaraciones END PROGRAM
+ini ::= PROGRAM declaraciones:a END PROGRAM {:RESULT = a; :}
 ;
 
 declaraciones ::= declaraciones declaracion
                 | declaracion
+                | error {::}
 ;
 
 declaracion::= imprimir
@@ -87,11 +88,7 @@ listas ::= listas expresion
             | expresion
 ;
 
-expresion ::= expresion:a MAS expresion:b {:RESULT = a + " + " + b;:}
-            | expresion:a MENOS expresion:b {:RESULT = a + " - " + b;:}
-            | expresion:a POR expresion:b {:RESULT = a + " * " + b;:}
-            | expresion:a DIV expresion:b {: RESULT = a + " / " + b; :}
-            | ID:a {:RESULT = a;:}
+expresion ::= ID:a {:RESULT = a;:}
             | CADENA:str {:RESULT = str;:}
             | ENTERO: i {:RESULT = i;:}
             | DOUBLE:a {:RESULT = a;:}

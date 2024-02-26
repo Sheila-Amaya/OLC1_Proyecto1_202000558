@@ -52,9 +52,8 @@ DOUBLE = [0-9]+\.[0-9]+ //reconoce num con pt decimal
 ENTERO = [0-9]+ //reconoce numeros enteros
 ID = (\_)*[a-zA-Z][a-zA-Z0-9\_]* //dentificadores (nombres de variables, funciones, etc.) 
 CADENA =  \"([^\"]|"\\\"")+\"
-comentarioMultilineal = 
-comentarioSimple = 
-
+comentarioMultilineal = "<!"([^!]|(![^>]))*"!>"
+comentarioSimple = "!"[ \t]*[^\n\r]*
 
 
 %%
@@ -105,6 +104,5 @@ comentarioSimple =
 //Recuperar errores lexicos  
 . {
     //guarda los errores lexicos
-    //System.out.println("Este es un error lexico: "+yytext()+ ", en la linea: "+yyline+", en la columna: "+yychar);
     Errores.add(new Excepcion("Lexico","Caracter no valido: "+ yytext(), yyline+"", yychar+""));
 }
