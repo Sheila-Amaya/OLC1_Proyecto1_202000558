@@ -56,6 +56,7 @@ terminal String NUMERO;
 
 terminal String VAR;
 terminal String CHAR_ARRAY;
+terminal String ARR;
 
 /* 4. No terminales */
 non terminal String ini;
@@ -66,6 +67,7 @@ non terminal String expresion;
 non terminal String expresiones;
 non terminal String tipo_dato;
 non terminal String declaracion_variable;
+non terminal String declaracion_arreglo;
 
 
 /* 5. precedencias operadores */
@@ -85,7 +87,9 @@ declaraciones ::= declaraciones declaracion
 
 declaracion ::= imprimir
              | declaracion_variable
+             | declaracion_arreglo
 ;
+
 
 imprimir ::= CONSOLE ACCESO PRINT ASIGNACION expresiones:e END PTCOMA {: RESULT = e; :}
 ;
@@ -93,9 +97,16 @@ imprimir ::= CONSOLE ACCESO PRINT ASIGNACION expresiones:e END PTCOMA {: RESULT 
 declaracion_variable ::= VAR DOS_PT tipo_dato:a ACCESO ID INICIALIZACION expresion:b END PTCOMA {: RESULT = a; :}
 ;
 
+declaracion_arreglo ::= ARR DOS_PT tipo_dato ACCESO ARROBA ID INICIALIZACION COR_IZQ expresiones:b COR_DER END PTCOMA
+;
+
+/*=========op aritmeticas=========*/
+
+
 expresiones ::= expresiones COMA expresion:e {: RESULT += e; :}
               | expresion:e {: RESULT = e; :}
 ;
+
 
 expresion ::= ID:a {:RESULT = a;:}
            | CADENA:str {:RESULT = str;:}
