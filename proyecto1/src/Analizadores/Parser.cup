@@ -39,7 +39,7 @@ parser code
 
 /* 3. terminales */
 terminal String PTCOMA, PAR_IZQ, PAR_DER, LLAV_IZQ, LLAV_DER, PT, DOS_PT, COMA, S, COR_IZQ, COR_DER;
-terminal String MAS, MENOS, POR, DIV;
+terminal String MAS, MENOS, POR, DIVISON;
 terminal String ASIGNACION, ACCESO;
 terminal String INICIALIZACION, ARROBA;
 
@@ -58,6 +58,12 @@ terminal String VAR;
 terminal String CHAR_ARRAY;
 terminal String ARR;
 
+terminal String SUM;
+terminal String RES;
+terminal String MUL;
+terminal String DIV;
+terminal String MOD;
+
 /* 4. No terminales */
 non terminal String ini;
 non terminal String declaraciones;
@@ -68,6 +74,8 @@ non terminal String expresiones;
 non terminal String tipo_dato;
 non terminal String declaracion_variable;
 non terminal String declaracion_arreglo;
+non terminal String op_aritmetica;
+non terminal String operacion;
 
 
 /* 5. precedencias operadores */
@@ -88,8 +96,8 @@ declaraciones ::= declaraciones declaracion
 declaracion ::= imprimir
              | declaracion_variable
              | declaracion_arreglo
+             | op_aritmetica
 ;
-
 
 imprimir ::= CONSOLE ACCESO PRINT ASIGNACION expresiones:e END PTCOMA {: RESULT = e; :}
 ;
@@ -97,22 +105,36 @@ imprimir ::= CONSOLE ACCESO PRINT ASIGNACION expresiones:e END PTCOMA {: RESULT 
 declaracion_variable ::= VAR DOS_PT tipo_dato:a ACCESO ID INICIALIZACION expresion:b END PTCOMA {: RESULT = a; :}
 ;
 
-declaracion_arreglo ::= ARR DOS_PT tipo_dato ACCESO ARROBA ID INICIALIZACION COR_IZQ expresiones:b COR_DER END PTCOMA
+declaracion_arreglo ::= ARR DOS_PT tipo_dato ACCESO ARROBA ID INICIALIZACION COR_IZQ expresiones:b COR_DER END PTCOMA {: RESULT = b; :}
 ;
 
 /*=========op aritmeticas=========*/
-
-
-expresiones ::= expresiones COMA expresion:e {: RESULT += e; :}
-              | expresion:e {: RESULT = e; :}
+op_aritmetica ::= VAR DOS_PT ID:a DOUBLE ACCESO operacion:b END PTCOMA {: RESULT = a; :}
 ;
 
 
-expresion ::= ID:a {:RESULT = a;:}
+expresiones ::= expresion:b
+              | expresiones:b COMA expresion:e {: RESULT = b + ", " + e; :}
+
+
+;
+
+
+expresion ::= operacion
+           | ID:a {:RESULT = a;:}
            | CADENA:str {:RESULT = str;:}
            | NUMERO:a {:RESULT = a;:}
+           | PAR_IZQ expresion PAR_DER
 ;
 
 tipo_dato ::= DOUBLE:d {: RESULT = d; :}
             | CHAR_ARRAY:c {: RESULT = c; :}
+;
+
+
+operacion ::= SUM PAR_IZQ expresiones PAR_DER
+            | RES PAR_IZQ expresiones PAR_DER
+            | MUL PAR_IZQ expresiones PAR_DER
+            | DIV PAR_IZQ expresiones PAR_DER
+            | MOD PAR_IZQ expresiones PAR_DER
 ;
