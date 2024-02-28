@@ -20,8 +20,10 @@ public class sym {
   public static final int COR_DER = 12;
   public static final int ARROBA = 20;
   public static final int DIV = 35;
+  public static final int MIN = 42;
   public static final int LLAV_IZQ = 5;
   public static final int ID = 26;
+  public static final int MEDIANA = 38;
   public static final int EOF = 0;
   public static final int DOS_PT = 8;
   public static final int error = 1;
@@ -30,17 +32,21 @@ public class sym {
   public static final int COMA = 9;
   public static final int CADENA = 25;
   public static final int MENOS = 14;
+  public static final int MODA = 39;
   public static final int MOD = 36;
   public static final int PAR_IZQ = 3;
   public static final int INICIALIZACION = 19;
   public static final int ASIGNACION = 17;
   public static final int ACCESO = 18;
   public static final int COR_IZQ = 11;
+  public static final int VARIANZA = 40;
   public static final int END = 22;
   public static final int SUM = 32;
   public static final int PTCOMA = 2;
   public static final int ARR = 31;
+  public static final int MEDIA = 37;
   public static final int LLAV_DER = 6;
+  public static final int MAX = 41;
   public static final int VAR = 29;
   public static final int PRINT = 24;
   public static final int CONSOLE = 23;
@@ -82,7 +88,13 @@ public class sym {
   "RES",
   "MUL",
   "DIV",
-  "MOD"
+  "MOD",
+  "MEDIA",
+  "MEDIANA",
+  "MODA",
+  "VARIANZA",
+  "MAX",
+  "MIN"
   };
 }
 

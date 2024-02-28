@@ -64,6 +64,13 @@ terminal String MUL;
 terminal String DIV;
 terminal String MOD;
 
+terminal String MEDIA;
+terminal String MEDIANA;
+terminal String MODA;
+terminal String VARIANZA;
+terminal String MAX;
+terminal String MIN;
+
 /* 4. No terminales */
 non terminal String ini;
 non terminal String declaraciones;
@@ -76,6 +83,7 @@ non terminal String declaracion_variable;
 non terminal String declaracion_arreglo;
 non terminal String op_aritmetica;
 non terminal String operacion;
+non terminal String funcion_estadistica;
 
 
 /* 5. precedencias operadores */
@@ -97,6 +105,7 @@ declaracion ::= imprimir
              | declaracion_variable
              | declaracion_arreglo
              | op_aritmetica
+
 ;
 
 imprimir ::= CONSOLE ACCESO PRINT ASIGNACION expresiones:e END PTCOMA {: RESULT = e; :}
@@ -112,12 +121,14 @@ declaracion_arreglo ::= ARR DOS_PT tipo_dato ACCESO ARROBA ID INICIALIZACION COR
 op_aritmetica ::= VAR DOS_PT ID:a DOUBLE ACCESO operacion:b END PTCOMA {: RESULT = a; :}
 ;
 
-
-expresiones ::= expresion:b
-              | expresiones:b COMA expresion:e {: RESULT = b + ", " + e; :}
-
-
-;
+/*=========funciones estadisticas=========*/
+funcion_estadistica ::= MEDIA PAR_IZQ expresion:b PAR_DER
+                   | MEDIANA PAR_IZQ expresion:b PAR_DER
+                   | MODA PAR_IZQ expresion:b PAR_DER
+                   | VARIANZA PAR_IZQ expresion:b PAR_DER
+                   | MAX PAR_IZQ expresion:b PAR_DER
+                   | MIN PAR_IZQ expresion:b PAR_DER
+; 
 
 
 expresion ::= operacion
@@ -125,7 +136,16 @@ expresion ::= operacion
            | CADENA:str {:RESULT = str;:}
            | NUMERO:a {:RESULT = a;:}
            | PAR_IZQ expresion PAR_DER
+           | funcion_estadistica
+           | COR_IZQ expresiones COR_DER
+           | ARROBA ID
 ;
+
+expresiones ::= expresion:b
+              | expresiones:b COMA expresion:e {: RESULT = b + ", " + e; :}
+;
+
+
 
 tipo_dato ::= DOUBLE:d {: RESULT = d; :}
             | CHAR_ARRAY:c {: RESULT = c; :}

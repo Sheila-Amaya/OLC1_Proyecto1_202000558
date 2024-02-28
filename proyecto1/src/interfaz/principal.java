@@ -360,7 +360,8 @@ public class principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu8MouseClicked
 
     private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
-        // TODO add your handling code here:  //------EJECUTAR------
+        // TODO add your handling code here:  
+        //------EJECUTAR------
         Analizadores.scanner scanner; //.java
         Analizadores.Sintactico parse;
         ArrayList<Excepcion> errores = new ArrayList(); //agregar errores
@@ -370,7 +371,7 @@ public class principal extends javax.swing.JFrame {
 
             scanner = new scanner(new BufferedReader(new StringReader(jTextArea1.getText())));
             parse = new Sintactico(scanner);
-            parse.parse();
+            parse.parse(); 
             
             errores.addAll(scanner.Errores); //errores lexicos
             errores.addAll(parse.getErrores()); //errores sintacticos
@@ -407,7 +408,7 @@ public class principal extends javax.swing.JFrame {
             pw = new PrintWriter(fichero);
             
             //Comenzamos a escribir el html
-                        pw.println("<html>");
+            pw.println("<html>");
             pw.println("<head>");
             pw.println("<title>REPORTE DE ERRORES</title>");
             pw.println("<link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN\" crossorigin=\"anonymous\">");

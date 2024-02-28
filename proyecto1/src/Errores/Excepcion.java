@@ -2,7 +2,7 @@ package Errores;
 
 public class Excepcion{
 
-    public String tipo; //guardar el tipo de error
+    public String tipo; //tipo de error
     public String descripcion; //descripcion del error
     public String linea; //linea donde se produce el error
     public String columna; //columna donde se produce el error
