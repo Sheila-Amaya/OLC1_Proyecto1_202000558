@@ -39,7 +39,6 @@ parser code
 
 /* 3. terminales */
 terminal String PTCOMA, PAR_IZQ, PAR_DER, LLAV_IZQ, LLAV_DER, PT, DOS_PT, COMA, S, COR_IZQ, COR_DER;
-terminal String MAS, MENOS, POR, DIVISON;
 terminal String ASIGNACION, ACCESO, ASIGNA;
 terminal String INICIALIZACION, ARROBA;
 
@@ -73,6 +72,20 @@ terminal String MIN;
 
 terminal String COLUMN;
 
+terminal String BAR;
+terminal String PIE;
+terminal String LINE;
+terminal String HISTOGRAM;
+
+terminal String EXEC;
+terminal String TITULO;
+terminal String X;
+terminal String Y;
+terminal String TITULOX;
+terminal String TITULOY;
+terminal String VALUES;
+terminal String LABEL;
+
 
 /* 4. No terminales */
 non terminal String ini;
@@ -88,10 +101,15 @@ non terminal String op_aritmetica;
 non terminal String operacion;
 non terminal String funcion_estadistica;
 
+non terminal String funcion_graficacion;
+non terminal String tipo_grafica;
+non terminal String atributos_grafica;
+non terminal String atributos;
+
+
 
 /* 5. precedencias operadores */
-precedence left MAS, MENOS;
-precedence left POR, DIV;
+
 
 /* 6. Reglas de producción para expresiones */
 start with ini;
@@ -108,6 +126,7 @@ declaracion ::= imprimir
              | declaracion_variable
              | declaracion_arreglo
              | op_aritmetica
+             | funcion_graficacion
 
 ;
 
@@ -135,6 +154,27 @@ funcion_estadistica ::= MEDIA PAR_IZQ expresion:b PAR_DER
 ; 
 
 /*=========funciones graficacion=========*/
+funcion_graficacion ::= tipo_grafica PAR_IZQ atributos_grafica EXEC tipo_grafica END PTCOMA PAR_DER END PTCOMA
+;
+
+tipo_grafica ::= BAR
+                |PIE
+                |LINE
+                |HISTOGRAM
+;
+
+atributos_grafica ::= atributos                               
+;
+
+
+atributos ::= TITULO ACCESO tipo_dato ASIGNACION CADENA END PTCOMA
+               | X ACCESO tipo_dato expresion END PTCOMA
+               | Y ACCESO tipo_dato expresion END PTCOMA
+               | TITULOX ACCESO tipo_dato ASIGNACION CADENA END PTCOMA
+               | TITULOY ACCESO tipo_dato ASIGNACION CADENA END PTCOMA
+               | LABEL ACCESO tipo_dato ASIGNACION expresion END PTCOMA
+               | VALUES ACCESO tipo_dato ASIGNACION expresion END PTCOMA
+;
 
 
 
@@ -151,7 +191,6 @@ expresion ::= operacion
 expresiones ::= expresion:b
               | expresiones:b COMA expresion:e {: RESULT = b + ", " + e; :}
 ;
-
 
 
 tipo_dato ::= DOUBLE:d {: RESULT = d; :}

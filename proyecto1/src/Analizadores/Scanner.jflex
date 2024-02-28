@@ -55,7 +55,6 @@ comentarioMultilineal = "<!"([^!]|(![^>]))*"!>"
 comentarioSimple = "!"[ \t]*[^\n\r]*
 
 
-
 %%
 
 /*3.Reglas semanticas, como se exportaran simbolos y terminales al cup */ 
@@ -65,28 +64,43 @@ comentarioSimple = "!"[ \t]*[^\n\r]*
 
 "console"   {TokenInfo token = new TokenInfo(yytext(), "CONSOLE", yyline, yychar);  tokens.add(token); return new Symbol(sym.CONSOLE,yyline,yychar,yytext());}
 "print"     {TokenInfo token = new TokenInfo(yytext(), "PRINT", yyline, yychar);  tokens.add(token); return new Symbol(sym.PRINT,yyline,yychar,yytext());}
+"column"    {TokenInfo token = new TokenInfo(yytext(), "COLUMN", yyline, yychar);  tokens.add(token); return new Symbol(sym.COLUMN,yyline,yychar,yytext());}
 
 "var"       {TokenInfo token = new TokenInfo(yytext(), "VAR", yyline, yychar);  tokens.add(token); return new Symbol(sym.VAR,yyline,yychar,yytext());}
 
 "char[]"    {TokenInfo token = new TokenInfo(yytext(), "CHAR_ARRAY", yyline, yychar);  tokens.add(token); return new Symbol(sym.CHAR_ARRAY,yyline,yychar,yytext());}
 "double"    {TokenInfo token = new TokenInfo(yytext(), "DOUBLE", yyline, yychar);  tokens.add(token); return new Symbol(sym.DOUBLE,yyline,yychar,yytext());}
 
-"arr"    {TokenInfo token = new TokenInfo(yytext(), "ARR", yyline, yychar);  tokens.add(token); return new Symbol(sym.ARR,yyline,yychar,yytext());}
+"arr"       {TokenInfo token = new TokenInfo(yytext(), "ARR", yyline, yychar);  tokens.add(token); return new Symbol(sym.ARR,yyline,yychar,yytext());}
 
-"sum"    {TokenInfo token = new TokenInfo(yytext(), "SUM", yyline, yychar);  tokens.add(token); return new Symbol(sym.SUM,yyline,yychar,yytext());}
-"res"    {TokenInfo token = new TokenInfo(yytext(), "RES", yyline, yychar);  tokens.add(token); return new Symbol(sym.RES,yyline,yychar,yytext());}
-"mul"    {TokenInfo token = new TokenInfo(yytext(), "MUL", yyline, yychar);  tokens.add(token); return new Symbol(sym.MUL,yyline,yychar,yytext());}
-"div"    {TokenInfo token = new TokenInfo(yytext(), "DIV", yyline, yychar);  tokens.add(token); return new Symbol(sym.DIV,yyline,yychar,yytext());}
-"mod"    {TokenInfo token = new TokenInfo(yytext(), "MOD", yyline, yychar);  tokens.add(token); return new Symbol(sym.MOD,yyline,yychar,yytext());}
+"sum"       {TokenInfo token = new TokenInfo(yytext(), "SUM", yyline, yychar);  tokens.add(token); return new Symbol(sym.SUM,yyline,yychar,yytext());}
+"res"       {TokenInfo token = new TokenInfo(yytext(), "RES", yyline, yychar);  tokens.add(token); return new Symbol(sym.RES,yyline,yychar,yytext());}
+"mul"       {TokenInfo token = new TokenInfo(yytext(), "MUL", yyline, yychar);  tokens.add(token); return new Symbol(sym.MUL,yyline,yychar,yytext());}
+"div"       {TokenInfo token = new TokenInfo(yytext(), "DIV", yyline, yychar);  tokens.add(token); return new Symbol(sym.DIV,yyline,yychar,yytext());}
+"mod"       {TokenInfo token = new TokenInfo(yytext(), "MOD", yyline, yychar);  tokens.add(token); return new Symbol(sym.MOD,yyline,yychar,yytext());}
 
-"media"    {TokenInfo token = new TokenInfo(yytext(), "MEDIA", yyline, yychar);  tokens.add(token); return new Symbol(sym.MEDIA,yyline,yychar,yytext());}
-"mediana"    {TokenInfo token = new TokenInfo(yytext(), "MEDIANA", yyline, yychar);  tokens.add(token); return new Symbol(sym.MEDIANA,yyline,yychar,yytext());}
-"moda"    {TokenInfo token = new TokenInfo(yytext(), "MODA", yyline, yychar);  tokens.add(token); return new Symbol(sym.MODA,yyline,yychar,yytext());}
-"varianza"    {TokenInfo token = new TokenInfo(yytext(), "VARIANZA", yyline, yychar);  tokens.add(token); return new Symbol(sym.VARIANZA,yyline,yychar,yytext());}
-"max"    {TokenInfo token = new TokenInfo(yytext(), "MAX", yyline, yychar);  tokens.add(token); return new Symbol(sym.MAX,yyline,yychar,yytext());}
-"min"    {TokenInfo token = new TokenInfo(yytext(), "MIN", yyline, yychar);  tokens.add(token); return new Symbol(sym.MIN,yyline,yychar,yytext());}
+"media"     {TokenInfo token = new TokenInfo(yytext(), "MEDIA", yyline, yychar);  tokens.add(token); return new Symbol(sym.MEDIA,yyline,yychar,yytext());}
+"mediana"   {TokenInfo token = new TokenInfo(yytext(), "MEDIANA", yyline, yychar);  tokens.add(token); return new Symbol(sym.MEDIANA,yyline,yychar,yytext());}
+"moda"      {TokenInfo token = new TokenInfo(yytext(), "MODA", yyline, yychar);  tokens.add(token); return new Symbol(sym.MODA,yyline,yychar,yytext());}
+"varianza"  {TokenInfo token = new TokenInfo(yytext(), "VARIANZA", yyline, yychar);  tokens.add(token); return new Symbol(sym.VARIANZA,yyline,yychar,yytext());}
+"max"       {TokenInfo token = new TokenInfo(yytext(), "MAX", yyline, yychar);  tokens.add(token); return new Symbol(sym.MAX,yyline,yychar,yytext());}
+"min"       {TokenInfo token = new TokenInfo(yytext(), "MIN", yyline, yychar);  tokens.add(token); return new Symbol(sym.MIN,yyline,yychar,yytext());}
 
-"column"    {TokenInfo token = new TokenInfo(yytext(), "COLUMN", yyline, yychar);  tokens.add(token); return new Symbol(sym.COLUMN,yyline,yychar,yytext());}
+
+"graphBar"   {TokenInfo token = new TokenInfo(yytext(), "BAR", yyline, yychar);  tokens.add(token); return new Symbol(sym.BAR,yyline,yychar,yytext());}
+"graphPie"   {TokenInfo token = new TokenInfo(yytext(), "PIE", yyline, yychar);  tokens.add(token); return new Symbol(sym.PIE,yyline,yychar,yytext());}
+"graphLine"  {TokenInfo token = new TokenInfo(yytext(), "LINE", yyline, yychar);  tokens.add(token); return new Symbol(sym.LINE,yyline,yychar,yytext());}
+"histogram"  {TokenInfo token = new TokenInfo(yytext(), "HISTOGRAM", yyline, yychar);  tokens.add(token); return new Symbol(sym.HISTOGRAM,yyline,yychar,yytext());}
+
+
+"exec"       {TokenInfo token = new TokenInfo(yytext(), "EXEC", yyline, yychar);  tokens.add(token); return new Symbol(sym.EXEC,yyline,yychar,yytext());}
+"titulo"     {TokenInfo token = new TokenInfo(yytext(), "TITULO", yyline, yychar);  tokens.add(token); return new Symbol(sym.TITULO,yyline,yychar,yytext());}
+"ejeX"       {TokenInfo token = new TokenInfo(yytext(), "X", yyline, yychar);  tokens.add(token); return new Symbol(sym.X,yyline,yychar,yytext());}
+"ejeY"       {TokenInfo token = new TokenInfo(yytext(), "Y", yyline, yychar);  tokens.add(token); return new Symbol(sym.Y,yyline,yychar,yytext());}
+"tituloX"    {TokenInfo token = new TokenInfo(yytext(), "TITULOX", yyline, yychar);  tokens.add(token); return new Symbol(sym.TITULOX,yyline,yychar,yytext());}
+"tituloY"    {TokenInfo token = new TokenInfo(yytext(), "TITULOY", yyline, yychar);  tokens.add(token); return new Symbol(sym.TITULOY,yyline,yychar,yytext());}
+"values"     {TokenInfo token = new TokenInfo(yytext(), "VALUES", yyline, yychar);  tokens.add(token); return new Symbol(sym.VALUES,yyline,yychar,yytext());}
+"label"      {TokenInfo token = new TokenInfo(yytext(), "LABEL", yyline, yychar);  tokens.add(token); return new Symbol(sym.LABEL,yyline,yychar,yytext());}
 
 
 {CADENA} {TokenInfo token = new TokenInfo(yytext(), "CADENA", yyline, yychar); tokens.add(token); return new Symbol(sym.CADENA, yyline, yychar, yytext()); }
@@ -106,18 +120,12 @@ comentarioSimple = "!"[ \t]*[^\n\r]*
 "$"  {TokenInfo token = new TokenInfo(yytext(), "S", yyline, yychar);  tokens.add(token); return new Symbol(sym.S,yyline,yychar,yytext());}
 
 "<-"  {TokenInfo token = new TokenInfo(yytext(), "INICIALIZACION", yyline, yychar);  tokens.add(token); return new Symbol(sym.INICIALIZACION,yyline,yychar,yytext());}
-"@"  {TokenInfo token = new TokenInfo(yytext(), "ARROBA", yyline, yychar);  tokens.add(token); return new Symbol(sym.ARROBA,yyline,yychar,yytext());}
+"@"   {TokenInfo token = new TokenInfo(yytext(), "ARROBA", yyline, yychar);  tokens.add(token); return new Symbol(sym.ARROBA,yyline,yychar,yytext());}
 "->"  {TokenInfo token = new TokenInfo(yytext(), "ASIGNA", yyline, yychar);  tokens.add(token); return new Symbol(sym.ASIGNA,yyline,yychar,yytext());}
 
 
-"+"  {TokenInfo token = new TokenInfo(yytext(), "MAS", yyline, yychar); tokens.add(token); return new Symbol(sym.MAS,yyline,yychar, yytext());} 
-"-"  {TokenInfo token = new TokenInfo(yytext(), "MENOS", yyline, yychar); tokens.add(token); return new Symbol(sym.MENOS,yyline,yychar, yytext());} 
-"*"  {TokenInfo token = new TokenInfo(yytext(), "POR", yyline, yychar); tokens.add(token); return new Symbol(sym.POR,yyline,yychar, yytext());} 
-"/"  {TokenInfo token = new TokenInfo(yytext(), "DIVISION", yyline, yychar); tokens.add(token); return new Symbol(sym.DIV,yyline,yychar, yytext());}
-
-
 {NUMERO} {TokenInfo token = new TokenInfo(yytext(), "NUMERO", yyline, yychar); tokens.add(token);return new Symbol(sym.NUMERO,yyline,yychar,yytext());}
-{ID} {TokenInfo token = new TokenInfo(yytext(), "ID", yyline, yychar); tokens.add(token); return new Symbol(sym.ID,yyline,yychar,yytext());}
+{ID}     {TokenInfo token = new TokenInfo(yytext(), "ID", yyline, yychar); tokens.add(token); return new Symbol(sym.ID,yyline,yychar,yytext());}
 
 
 \n {yychar=1;}
