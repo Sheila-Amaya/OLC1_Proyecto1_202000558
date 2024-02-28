@@ -40,7 +40,7 @@ parser code
 /* 3. terminales */
 terminal String PTCOMA, PAR_IZQ, PAR_DER, LLAV_IZQ, LLAV_DER, PT, DOS_PT, COMA, S, COR_IZQ, COR_DER;
 terminal String MAS, MENOS, POR, DIVISON;
-terminal String ASIGNACION, ACCESO;
+terminal String ASIGNACION, ACCESO, ASIGNA;
 terminal String INICIALIZACION, ARROBA;
 
 terminal String PROGRAM;
@@ -70,6 +70,9 @@ terminal String MODA;
 terminal String VARIANZA;
 terminal String MAX;
 terminal String MIN;
+
+terminal String COLUMN;
+
 
 /* 4. No terminales */
 non terminal String ini;
@@ -109,6 +112,7 @@ declaracion ::= imprimir
 ;
 
 imprimir ::= CONSOLE ACCESO PRINT ASIGNACION expresiones:e END PTCOMA {: RESULT = e; :}
+            | CONSOLE ACCESO COLUMN ASIGNACION expresiones ASIGNA expresiones END PTCOMA
 ;
 
 declaracion_variable ::= VAR DOS_PT tipo_dato:a ACCESO ID INICIALIZACION expresion:b END PTCOMA {: RESULT = a; :}
@@ -129,6 +133,9 @@ funcion_estadistica ::= MEDIA PAR_IZQ expresion:b PAR_DER
                    | MAX PAR_IZQ expresion:b PAR_DER
                    | MIN PAR_IZQ expresion:b PAR_DER
 ; 
+
+/*=========funciones graficacion=========*/
+
 
 
 expresion ::= operacion

@@ -86,6 +86,8 @@ comentarioSimple = "!"[ \t]*[^\n\r]*
 "max"    {TokenInfo token = new TokenInfo(yytext(), "MAX", yyline, yychar);  tokens.add(token); return new Symbol(sym.MAX,yyline,yychar,yytext());}
 "min"    {TokenInfo token = new TokenInfo(yytext(), "MIN", yyline, yychar);  tokens.add(token); return new Symbol(sym.MIN,yyline,yychar,yytext());}
 
+"column"    {TokenInfo token = new TokenInfo(yytext(), "COLUMN", yyline, yychar);  tokens.add(token); return new Symbol(sym.COLUMN,yyline,yychar,yytext());}
+
 
 {CADENA} {TokenInfo token = new TokenInfo(yytext(), "CADENA", yyline, yychar); tokens.add(token); return new Symbol(sym.CADENA, yyline, yychar, yytext()); }
 
@@ -105,6 +107,7 @@ comentarioSimple = "!"[ \t]*[^\n\r]*
 
 "<-"  {TokenInfo token = new TokenInfo(yytext(), "INICIALIZACION", yyline, yychar);  tokens.add(token); return new Symbol(sym.INICIALIZACION,yyline,yychar,yytext());}
 "@"  {TokenInfo token = new TokenInfo(yytext(), "ARROBA", yyline, yychar);  tokens.add(token); return new Symbol(sym.ARROBA,yyline,yychar,yytext());}
+"->"  {TokenInfo token = new TokenInfo(yytext(), "ASIGNA", yyline, yychar);  tokens.add(token); return new Symbol(sym.ASIGNA,yyline,yychar,yytext());}
 
 
 "+"  {TokenInfo token = new TokenInfo(yytext(), "MAS", yyline, yychar); tokens.add(token); return new Symbol(sym.MAS,yyline,yychar, yytext());} 
