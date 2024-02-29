@@ -98,23 +98,9 @@ public class Excepcion{
 
 ```
  
-4. Clase ErrSin
-    *Se utiliza para representar errores sintácticos en un programa Java. Permite almacenar información sobre el token o elemento que causó el error, así como su ubicación en el código fuente (línea y columna). El método toString() proporciona una representación legible del error sintáctico que se puede utilizar para mostrar mensajes de error al usuario o para registrar información de errores en el programa.*
+4. Clase 
+    *.*
 
 ```java
-public class ErrSin {
-    Object token;
-    int linea;
-    int columna;
-    public ErrSin(Object token, int linea,int columna) {
-        this.token = token;
-        this.linea = linea;
-        this.columna = columna;
-    }
-    public String toString() {
-        return "Error Sintáctico" + (token != null ? ": Ln " + linea + ", Col " + columna : "") +
-            ". Elemento: " + token;
-    }
-}
 
 ```
