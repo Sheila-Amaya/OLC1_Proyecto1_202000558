@@ -51,8 +51,8 @@ EVITAR=[ \r\t]+
 NUMERO = [0-9]+(\.[0-9]*)?|\.[0-9]+ //reconoce num con pt decimal y entero
 ID = (\_)*[a-zA-Z][a-zA-Z0-9\_]* //dentificadores (nombres de variables, funciones, etc.) 
 CADENA =  \"([^\"]|\"\\\"\")+\"
-comentarioMultilineal = "<!"([^!]|(![^>]))*"!>"
-comentarioSimple = "!"[ \t]*[^\n\r]*
+comentarioMultilineal = "<!" [^<>]* ( <! [^<>]* )* "!>"
+comentarioSimple = "!"([^\n]*)?
 
 
 %%
