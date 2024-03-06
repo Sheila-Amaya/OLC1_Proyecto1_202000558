@@ -66,9 +66,9 @@ public class principal extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -115,16 +115,20 @@ public class principal extends javax.swing.JFrame {
         jTextArea2.setRows(5);
         jScrollPane2.setViewportView(jTextArea2);
 
-        jButton1.setText("Graficar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         jButton2.setText("Anterior");
 
         jButton3.setText("Siguiente");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
         jMenuBar2.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
 
@@ -219,43 +223,41 @@ public class principal extends javax.swing.JFrame {
                         .addGap(6, 6, 6)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)
-                        .addGap(146, 146, 146)
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3)
                         .addGap(40, 40, 40))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 900, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 892, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(14, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton1))
+                    .addComponent(jButton3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getAccessibleContext().setAccessibleName("DataForge");
@@ -424,10 +426,6 @@ public class principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     public static void generarReporteHTML(ArrayList<Excepcion> errores) throws IOException {
         FileWriter fichero = null; //escribir el archivo
         PrintWriter pw = null; //escribir texto dentro del archivo
@@ -453,6 +451,7 @@ public class principal extends javax.swing.JFrame {
             pw.println("<table class=\"table\">");
             pw.println("<thead class=\"thead-dark\">"); // Aplicamos la clase thead-dark para el encabezado oscuro
             pw.println("<tr>");
+            pw.println("<th scope=\"col\">#</th>"); // New column for numbering
             pw.println("<th scope=\"col\">ERROR</th>");
             pw.println("<th scope=\"col\">DESCRIPCION</th>");
             pw.println("<th scope=\"col\">FILA</th>");
@@ -462,13 +461,16 @@ public class principal extends javax.swing.JFrame {
             pw.println("<tbody>");
 
             // Iteramos sobre la lista de errores y los agregamos a la tabla
+            int count = 1; // Initialize counter
             for (Excepcion err : errores) {
                 pw.println("<tr>");
+                pw.println("<td>" + count + "</td>"); // Print counter value
                 pw.println("<td>" + err.tipo + "</td>");
                 pw.println("<td>" + err.descripcion + "</td>");
                 pw.println("<td>" + err.linea + "</td>");
                 pw.println("<td>" + err.columna + "</td>");
                 pw.println("</tr>");
+                count++; // Increment counter
             }
 
             pw.println("</tbody>");
@@ -514,10 +516,11 @@ public class principal extends javax.swing.JFrame {
         pw.println("<h1 class=\"mt-5\">Reporte de Tokens</h1>"); // Agregamos clases de margen superior (mt-5) de Bootstrap
         pw.println("<br></br>");
 
-            // Agregamos la tabla con clases de Bootstrap
+        // Agregamos la tabla con clases de Bootstrap
         pw.println("<table class=\"table\">");
         pw.println("<thead class=\"thead-dark\">"); // Aplicamos la clase thead-dark para el encabezado oscuro
         pw.println("<tr>");
+        pw.println("<th scope=\"col\">#</th>"); // Agregamos la columna de numeración
         pw.println("<th scope=\"col\">LEXEMA</th>");
         pw.println("<th scope=\"col\">TOKEN</th>");
         pw.println("<th scope=\"col\">LÍNEA</th>");
@@ -526,9 +529,11 @@ public class principal extends javax.swing.JFrame {
         pw.println("</thead>");
         pw.println("<tbody>");
 
-            // Iteramos sobre la lista de tokens y los agregamos a la tabla
-        for (TokenInfo token : tokens) {
+        // Iteramos sobre la lista de tokens y los agregamos a la tabla
+        for (int i = 0; i < tokens.size(); i++) {
+            TokenInfo token = tokens.get(i);
             pw.println("<tr>");
+            pw.println("<td>" + (i + 1) + "</td>"); // Imprimimos el número de la fila
             pw.println("<td>" + token.getLexema() + "</td>");
             pw.println("<td>" + token.getToken() + "</td>");
             pw.println("<td>" + token.getLinea() + "</td>");
@@ -542,7 +547,7 @@ public class principal extends javax.swing.JFrame {
         // Continuamos con el resto del contenido HTML
         pw.println("</div>");
         pw.println("</body>");
-        pw.println("</html>");;
+        pw.println("</html>");
         //Desktop.getDesktop().open(new File(path));
 
     } catch (Exception e) {
@@ -591,7 +596,6 @@ public class principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
@@ -613,6 +617,7 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;

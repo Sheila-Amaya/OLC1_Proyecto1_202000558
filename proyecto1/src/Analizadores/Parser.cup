@@ -8,12 +8,32 @@ import java.util.ArrayList;
 import java.util.List;
 import Errores.Excepcion;
 
+import Instruccion.Aritmetica;
+import Instruccion.Variable;
+import Instruccion.Imprimir;  
+import Grafica.GraficaBarras;   
+import Grafica.GraficaPie;  
+import Grafica.GraficaLine;     
+import Grafica.DataHistograma;                                         
+
+
 
 /* 2. código para el parser, variables, métodos */
 
 // PARSER
 parser code
-{:
+{:   
+
+    Variable vari = new Variable();
+    Aritmetica Ari = new Aritmetica();
+
+    // Crear un ArrayList para almacenar objetos GraficaBarras
+    public ArrayList<GraficaBarras> listaGraficas = new ArrayList<>();
+
+    GraficaBarras grb = new GraficaBarras();
+    GraficaPie grp = new GraficaPie();
+    GraficaLine grl = new GraficaLine();
+    DataHistograma dh = new DataHistograma();
 
     // clases, objetos, variables, listas, etc.
     public List<String> salidas = new ArrayList<String>();
@@ -102,10 +122,6 @@ non terminal String operacion;
 non terminal String funcion_estadistica;
 
 non terminal String funcion_graficacion;
-non terminal String BAR_GRAFICACION;
-non terminal String PIE_GRAFICACION;
-non terminal String LINE_GRAFICACION;
-non terminal String HISTOGRAM_GRAFICACION;
 non terminal String atributos_bar;
 non terminal String atributos_line;
 non terminal String atributos_pie;
@@ -115,8 +131,6 @@ non terminal String graficaBarras;
 non terminal String graficaPie;
 non terminal String graficaLine;
 non terminal String datosHistogram;
-
-
 
 
 /* 5. precedencias operadores */
@@ -130,7 +144,7 @@ ini ::= PROGRAM declaraciones:a END PROGRAM {:RESULT = a; :}
 
 declaraciones ::= declaraciones declaracion
             | declaracion
-            | error {::}
+            | error PTCOMA {::}
 ;
 
 declaracion ::= imprimir
@@ -138,66 +152,66 @@ declaracion ::= imprimir
             | declaracion_arreglo
             | op_aritmetica
             | funcion_graficacion
-
 ; 
 
-imprimir ::= CONSOLE ACCESO PRINT ASIGNACION expresiones:e END PTCOMA {: RESULT = e; :}
+imprimir ::= CONSOLE ACCESO PRINT ASIGNACION expresiones:exp END PTCOMA {: salidas.add(exp); :}
             | CONSOLE ACCESO COLUMN ASIGNACION expresiones ASIGNA expresiones END PTCOMA
 ;
 
-declaracion_variable ::= VAR DOS_PT tipo_dato:a ACCESO ID INICIALIZACION expresion:b END PTCOMA {: RESULT = a; :}
+declaracion_variable ::= VAR DOS_PT tipo_dato:a ACCESO ID:id INICIALIZACION expresion:exp END PTCOMA {: vari.asignar(id , exp);  :}
 ;
 
-declaracion_arreglo ::= ARR DOS_PT tipo_dato ACCESO ARROBA ID INICIALIZACION COR_IZQ expresiones:b COR_DER END PTCOMA {: RESULT = b; :}
+
+declaracion_arreglo ::= ARR DOS_PT tipo_dato ACCESO ARROBA ID:id INICIALIZACION COR_IZQ expresiones:exp COR_DER END PTCOMA {: vari.asignar(id , exp); :}
 ;
 
 /*=========op aritmeticas=========*/
-op_aritmetica ::= VAR DOS_PT ID:a DOUBLE ACCESO operacion:b END PTCOMA {: RESULT = a; :}
+op_aritmetica ::= VAR DOS_PT ID:a DOUBLE ACCESO operacion:b END PTCOMA {: RESULT = b;  :}
 ;
 
 /*=========funciones estadisticas=========*/
-funcion_estadistica ::= MEDIA PAR_IZQ expresion:b PAR_DER
-                | MEDIANA PAR_IZQ expresion:b PAR_DER
-                | MODA PAR_IZQ expresion:b PAR_DER
-                | VARIANZA PAR_IZQ expresion:b PAR_DER
-                | MAX PAR_IZQ expresion:b PAR_DER
-                | MIN PAR_IZQ expresion:b PAR_DER
+funcion_estadistica ::= MEDIA PAR_IZQ expresion:exp PAR_DER
+                | MEDIANA     PAR_IZQ expresion:exp PAR_DER
+                | MODA        PAR_IZQ expresion:exp PAR_DER
+                | VARIANZA    PAR_IZQ expresion:exp PAR_DER
+                | MAX         PAR_IZQ expresion:exp PAR_DER
+                | MIN         PAR_IZQ expresion:exp PAR_DER
 ; 
 
 /*=========expresiones=========*/
-expresion ::= operacion
-        | ID:a {:RESULT = a;:}
-        | CADENA:str {:RESULT = str;:}
-        | NUMERO:a {:RESULT = a;:}
-        | PAR_IZQ expresion PAR_DER
-        | funcion_estadistica
-        | COR_IZQ expresiones COR_DER
-        | ARROBA ID
+expresion ::= operacion:a                   {:RESULT = a;                         :}
+        | ID:id                             {:RESULT = vari.obtener(id);          :}
+        | CADENA:str                        {:RESULT = str.replace("\"", "");     :}
+        | NUMERO:num                        {:RESULT = num;                       :}
+        | PAR_IZQ expresion:exp PAR_DER     {:RESULT = exp;                       :}
+        | funcion_estadistica:a             {:RESULT = a;                         :}
+        | COR_IZQ expresiones:exp COR_DER   {:RESULT = exp;                       :}
+        | ARROBA:a ID:id                    {:RESULT = vari.obtener(id);          :}
 ;
 
-expresiones ::= expresion:b
-            | expresiones:b COMA expresion:e {: RESULT = b + ", " + e; :}
+expresiones ::= expresion:b                   {: RESULT = b;     :}
+            | expresiones:b COMA expresion:e  {: RESULT = b + " , " + e; :}
             | /* */
 ;
 
 
-tipo_dato ::= DOUBLE:d {: RESULT = d; :}
-            | CHAR_ARRAY:c {: RESULT = c; :}
+tipo_dato ::= DOUBLE:d      {: RESULT = d; :}
+            | CHAR_ARRAY:c  {: RESULT = c; :}
 ;
 
 
-operacion ::= SUM PAR_IZQ expresiones PAR_DER
-            | RES PAR_IZQ expresiones PAR_DER
-            | MUL PAR_IZQ expresiones PAR_DER
-            | DIV PAR_IZQ expresiones PAR_DER
-            | MOD PAR_IZQ expresiones PAR_DER
+operacion ::= SUM PAR_IZQ expresion:a COMA expresion:b PAR_DER {: RESULT = Ari.sumArit(a, b); :}
+            | RES PAR_IZQ expresion:a COMA expresion:b PAR_DER {: RESULT = Ari.resArit(a, b); :} 
+            | MUL PAR_IZQ expresion:a COMA expresion:b PAR_DER {: RESULT = Ari.mulArit(a, b); :} 
+            | DIV PAR_IZQ expresion:a COMA expresion:b PAR_DER {: RESULT = Ari.divArit(a, b); :} 
+            | MOD PAR_IZQ expresion:a COMA expresion:b PAR_DER {: RESULT = Ari.modArit(a, b); :} 
 ;
 
 /*=========graficacion=========*/
-funcion_graficacion ::= BAR PAR_IZQ graficaBarras EXEC BAR END PTCOMA PAR_DER END PTCOMA
-                    | PIE PAR_IZQ graficaPie EXEC PIE END PTCOMA PAR_DER END PTCOMA
-                    | LINE PAR_IZQ graficaLine EXEC LINE END PTCOMA PAR_DER END PTCOMA
-                    | HISTOGRAM PAR_IZQ datosHistogram EXEC HISTOGRAM END PTCOMA PAR_DER END PTCOMA
+funcion_graficacion ::= BAR     PAR_IZQ graficaBarras   EXEC BAR       END PTCOMA PAR_DER END PTCOMA {: grb.build(); System.out.println(grb.toString()); :}
+                    | PIE       PAR_IZQ graficaPie      EXEC PIE       END PTCOMA PAR_DER END PTCOMA {: grp.build(); System.out.println(grp.toString()); :}
+                    | LINE      PAR_IZQ graficaLine     EXEC LINE      END PTCOMA PAR_DER END PTCOMA {: grl.build(); System.out.println(grl.toString()); :}
+                    | HISTOGRAM PAR_IZQ datosHistogram  EXEC HISTOGRAM END PTCOMA PAR_DER END PTCOMA {: dh.build(); salidas.add(dh.calcularFrecuencia()); :}   
 ;
 
 graficaBarras ::= atributos_bar graficaBarras
@@ -216,25 +230,25 @@ datosHistogram ::= atributos_histogram datosHistogram
             | atributos_histogram
 ;
 
-atributos_bar ::= TITULO ACCESO CHAR_ARRAY ASIGNACION expresion END PTCOMA
-            | TITULOX ACCESO CHAR_ARRAY ASIGNACION expresion END PTCOMA
-            | TITULOY ACCESO CHAR_ARRAY ASIGNACION expresion END PTCOMA
-            | X ACCESO CHAR_ARRAY ASIGNACION expresion END PTCOMA
-            | Y ACCESO DOUBLE ASIGNACION expresion END PTCOMA
+atributos_bar ::= TITULO ACCESO CHAR_ARRAY ASIGNACION expresion:exp END PTCOMA  {: grb.setTitulo(exp);  :}
+            | TITULOX    ACCESO CHAR_ARRAY ASIGNACION expresion:exp END PTCOMA  {: grb.setTituloX(exp); :}
+            | TITULOY    ACCESO CHAR_ARRAY ASIGNACION expresion:exp END PTCOMA  {: grb.setTituloY(exp); :} 
+            | X          ACCESO CHAR_ARRAY ASIGNACION expresion:exp END PTCOMA  {: grb.setEjeX(exp);    :} 
+            | Y          ACCESO DOUBLE     ASIGNACION expresion:exp END PTCOMA  {: grb.setEjeY(exp);    :} 
 ;
 
-atributos_pie ::= TITULO ACCESO CHAR_ARRAY ASIGNACION expresion END PTCOMA
-            | VALUES ACCESO DOUBLE ASIGNACION expresion END PTCOMA
-            | LABEL ACCESO CHAR_ARRAY ASIGNACION expresion END PTCOMA
+atributos_pie ::= TITULO ACCESO CHAR_ARRAY  ASIGNACION expresion:exp END PTCOMA  {: grp.setTitulo(exp);  :}   
+            | VALUES     ACCESO DOUBLE      ASIGNACION expresion:exp END PTCOMA  {: grp.setValues(exp);  :} 
+            | LABEL      ACCESO CHAR_ARRAY  ASIGNACION expresion:exp END PTCOMA  {: grp.setLabel(exp);   :} 
 ;
 
-atributos_line ::= TITULO ACCESO CHAR_ARRAY ASIGNACION expresion END PTCOMA
-            | TITULOX ACCESO CHAR_ARRAY ASIGNACION expresion END PTCOMA
-            | TITULOY ACCESO CHAR_ARRAY ASIGNACION expresion END PTCOMA
-            | X ACCESO CHAR_ARRAY ASIGNACION expresion END PTCOMA
-            | Y ACCESO DOUBLE ASIGNACION expresion END PTCOMA
+atributos_line ::= TITULO ACCESO CHAR_ARRAY ASIGNACION expresion:exp END PTCOMA     {: grl.setTitulo(exp);  :}
+            | TITULOX     ACCESO CHAR_ARRAY ASIGNACION expresion:exp END PTCOMA     {: grl.setTituloX(exp); :} 
+            | TITULOY     ACCESO CHAR_ARRAY ASIGNACION expresion:exp END PTCOMA     {: grl.setTituloY(exp); :}  
+            | X           ACCESO CHAR_ARRAY ASIGNACION expresion:exp END PTCOMA     {: grl.setEjeX(exp);    :}   
+            | Y           ACCESO DOUBLE     ASIGNACION expresion:exp END PTCOMA     {: grl.setEjeY(exp);    :} 
 ;
 
-atributos_histogram ::= TITULO ACCESO CHAR_ARRAY ASIGNACION expresion END PTCOMA
-            | VALUES ACCESO DOUBLE ASIGNACION expresion END PTCOMA
+atributos_histogram ::= TITULO ACCESO CHAR_ARRAY ASIGNACION expresion:exp END PTCOMA      {: dh.setTitulo(exp);  :}
+            | VALUES           ACCESO DOUBLE     ASIGNACION expresion:exp END PTCOMA      {: dh.setValues(exp);  :}
 ;
