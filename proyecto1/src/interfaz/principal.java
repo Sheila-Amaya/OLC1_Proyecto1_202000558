@@ -280,7 +280,7 @@ public class principal extends javax.swing.JFrame {
                     .addComponent(jButton3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         getAccessibleContext().setAccessibleName("DataForge");
@@ -437,6 +437,8 @@ public class principal extends javax.swing.JFrame {
             }
             this.jTextArea2.setText(result);
             
+            jPanel1.removeAll();  // Limpiar el JPanel antes de generar las gráficas
+            limpiarChartPanels(); // Limpiar los ChartPanel antes de generar las gráficas
             //graficas
             generarGB(parse.grB);
             generarGP(parse.grP);
@@ -449,6 +451,7 @@ public class principal extends javax.swing.JFrame {
             }
 
             jPanel1.setLayout(cardLayout);
+            
 
         } catch (Exception ex) {
             Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
@@ -604,6 +607,9 @@ public class principal extends javax.swing.JFrame {
         }
     }
     
+    public static void limpiarChartPanels() {
+        chartPanels.clear();
+    }
     
     public static void generarReporteHTML(ArrayList<Excepcion> errores) throws IOException {
         FileWriter fichero = null; //escribir el archivo
