@@ -507,13 +507,16 @@ public class Sintactico extends java_cup.runtime.lr_parser {
     Variable vari = new Variable();
     Aritmetica Ari = new Aritmetica();
 
-    // Crear un ArrayList para almacenar objetos GraficaBarras
-    public ArrayList<GraficaBarras> listaGraficas = new ArrayList<>();
+    public ArrayList<Object> grB = new ArrayList<Object>();
+    public ArrayList<Object> grP = new ArrayList<Object>();
+    public ArrayList<Object> grL = new ArrayList<Object>();
+    public ArrayList<Object> gH = new ArrayList<Object>();
 
-    GraficaBarras grb = new GraficaBarras();
-    GraficaPie grp = new GraficaPie();
-    GraficaLine grl = new GraficaLine();
-    DataHistograma dh = new DataHistograma();
+    public GraficaBarras grb = new GraficaBarras();
+    public GraficaPie grp = new GraficaPie();;
+    public GraficaLine grl = new GraficaLine();
+    public DataHistograma dh = new DataHistograma();
+
 
     // clases, objetos, variables, listas, etc.
     public List<String> salidas = new ArrayList<String>();
@@ -654,7 +657,7 @@ class CUP$Sintactico$actions {
           case 9: // declaracion ::= funcion_graficacion 
             {
               String RESULT =null;
-
+		  
               CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("declaracion",2, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;
@@ -1038,7 +1041,7 @@ class CUP$Sintactico$actions {
           case 39: // funcion_graficacion ::= BAR PAR_IZQ graficaBarras EXEC BAR END PTCOMA PAR_DER END PTCOMA 
             {
               String RESULT =null;
-		 grb.build(); System.out.println(grb.toString()); 
+		 grb.build(); grB.add(grb); 
               CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("funcion_graficacion",12, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-9)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;
@@ -1047,7 +1050,7 @@ class CUP$Sintactico$actions {
           case 40: // funcion_graficacion ::= PIE PAR_IZQ graficaPie EXEC PIE END PTCOMA PAR_DER END PTCOMA 
             {
               String RESULT =null;
-		 grp.build(); System.out.println(grp.toString()); 
+		 grp.build(); grP.add(grp); 
               CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("funcion_graficacion",12, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-9)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;
@@ -1056,7 +1059,7 @@ class CUP$Sintactico$actions {
           case 41: // funcion_graficacion ::= LINE PAR_IZQ graficaLine EXEC LINE END PTCOMA PAR_DER END PTCOMA 
             {
               String RESULT =null;
-		 grl.build(); System.out.println(grl.toString()); 
+		 grl.build(); grL.add(grl); 
               CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("funcion_graficacion",12, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-9)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;
@@ -1065,7 +1068,7 @@ class CUP$Sintactico$actions {
           case 42: // funcion_graficacion ::= HISTOGRAM PAR_IZQ datosHistogram EXEC HISTOGRAM END PTCOMA PAR_DER END PTCOMA 
             {
               String RESULT =null;
-		 dh.build(); salidas.add(dh.calcularFrecuencia()); 
+		 dh.build(); salidas.add(dh.calcularFrecuencia()); gH.add(dh.datosHistograma()); 
               CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("funcion_graficacion",12, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-9)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;

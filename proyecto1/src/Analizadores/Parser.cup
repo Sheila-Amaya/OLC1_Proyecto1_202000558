@@ -27,13 +27,16 @@ parser code
     Variable vari = new Variable();
     Aritmetica Ari = new Aritmetica();
 
-    // Crear un ArrayList para almacenar objetos GraficaBarras
-    public ArrayList<GraficaBarras> listaGraficas = new ArrayList<>();
+    public ArrayList<Object> grB = new ArrayList<Object>();
+    public ArrayList<Object> grP = new ArrayList<Object>();
+    public ArrayList<Object> grL = new ArrayList<Object>();
+    public ArrayList<Object> gH = new ArrayList<Object>();
 
-    GraficaBarras grb = new GraficaBarras();
-    GraficaPie grp = new GraficaPie();
-    GraficaLine grl = new GraficaLine();
-    DataHistograma dh = new DataHistograma();
+    public GraficaBarras grb = new GraficaBarras();
+    public GraficaPie grp = new GraficaPie();;
+    public GraficaLine grl = new GraficaLine();
+    public DataHistograma dh = new DataHistograma();
+
 
     // clases, objetos, variables, listas, etc.
     public List<String> salidas = new ArrayList<String>();
@@ -151,7 +154,7 @@ declaracion ::= imprimir
             | declaracion_variable
             | declaracion_arreglo
             | op_aritmetica
-            | funcion_graficacion
+            | funcion_graficacion   {:  :}
 ; 
 
 imprimir ::= CONSOLE ACCESO PRINT ASIGNACION expresiones:exp END PTCOMA {: salidas.add(exp); :}
@@ -208,10 +211,10 @@ operacion ::= SUM PAR_IZQ expresion:a COMA expresion:b PAR_DER {: RESULT = Ari.s
 ;
 
 /*=========graficacion=========*/
-funcion_graficacion ::= BAR     PAR_IZQ graficaBarras   EXEC BAR       END PTCOMA PAR_DER END PTCOMA {: grb.build(); System.out.println(grb.toString()); :}
-                    | PIE       PAR_IZQ graficaPie      EXEC PIE       END PTCOMA PAR_DER END PTCOMA {: grp.build(); System.out.println(grp.toString()); :}
-                    | LINE      PAR_IZQ graficaLine     EXEC LINE      END PTCOMA PAR_DER END PTCOMA {: grl.build(); System.out.println(grl.toString()); :}
-                    | HISTOGRAM PAR_IZQ datosHistogram  EXEC HISTOGRAM END PTCOMA PAR_DER END PTCOMA {: dh.build(); salidas.add(dh.calcularFrecuencia()); :}   
+funcion_graficacion ::= BAR     PAR_IZQ graficaBarras   EXEC BAR       END PTCOMA PAR_DER END PTCOMA {: grb.build(); grB.add(grb); :}
+                    | PIE       PAR_IZQ graficaPie      EXEC PIE       END PTCOMA PAR_DER END PTCOMA {: grp.build(); grP.add(grp); :}
+                    | LINE      PAR_IZQ graficaLine     EXEC LINE      END PTCOMA PAR_DER END PTCOMA {: grl.build(); grL.add(grl); :}
+                    | HISTOGRAM PAR_IZQ datosHistogram  EXEC HISTOGRAM END PTCOMA PAR_DER END PTCOMA {: dh.build(); salidas.add(dh.calcularFrecuencia()); gH.add(dh.datosHistograma()); :}   
 ;
 
 graficaBarras ::= atributos_bar graficaBarras
@@ -230,25 +233,25 @@ datosHistogram ::= atributos_histogram datosHistogram
             | atributos_histogram
 ;
 
-atributos_bar ::= TITULO ACCESO CHAR_ARRAY ASIGNACION expresion:exp END PTCOMA  {: grb.setTitulo(exp);  :}
-            | TITULOX    ACCESO CHAR_ARRAY ASIGNACION expresion:exp END PTCOMA  {: grb.setTituloX(exp); :}
-            | TITULOY    ACCESO CHAR_ARRAY ASIGNACION expresion:exp END PTCOMA  {: grb.setTituloY(exp); :} 
-            | X          ACCESO CHAR_ARRAY ASIGNACION expresion:exp END PTCOMA  {: grb.setEjeX(exp);    :} 
-            | Y          ACCESO DOUBLE     ASIGNACION expresion:exp END PTCOMA  {: grb.setEjeY(exp);    :} 
+atributos_bar ::= TITULO ACCESO CHAR_ARRAY ASIGNACION expresion:exp END PTCOMA       {: grb.setTitulo(exp);  :}
+            | TITULOX    ACCESO CHAR_ARRAY ASIGNACION expresion:exp END PTCOMA       {: grb.setTituloX(exp); :}
+            | TITULOY    ACCESO CHAR_ARRAY ASIGNACION expresion:exp END PTCOMA       {: grb.setTituloY(exp); :} 
+            | X          ACCESO CHAR_ARRAY ASIGNACION expresion:exp END PTCOMA       {: grb.setEjeX(exp);    :} 
+            | Y          ACCESO DOUBLE     ASIGNACION expresion:exp END PTCOMA       {: grb.setEjeY(exp);    :} 
 ;
 
-atributos_pie ::= TITULO ACCESO CHAR_ARRAY  ASIGNACION expresion:exp END PTCOMA  {: grp.setTitulo(exp);  :}   
-            | VALUES     ACCESO DOUBLE      ASIGNACION expresion:exp END PTCOMA  {: grp.setValues(exp);  :} 
-            | LABEL      ACCESO CHAR_ARRAY  ASIGNACION expresion:exp END PTCOMA  {: grp.setLabel(exp);   :} 
+atributos_pie ::= TITULO ACCESO CHAR_ARRAY  ASIGNACION expresion:exp END PTCOMA      {: grp.setTitulo(exp);  :}   
+            | VALUES     ACCESO DOUBLE      ASIGNACION expresion:exp END PTCOMA      {: grp.setValues(exp);  :} 
+            | LABEL      ACCESO CHAR_ARRAY  ASIGNACION expresion:exp END PTCOMA      {: grp.setLabel(exp);   :} 
 ;
 
-atributos_line ::= TITULO ACCESO CHAR_ARRAY ASIGNACION expresion:exp END PTCOMA     {: grl.setTitulo(exp);  :}
-            | TITULOX     ACCESO CHAR_ARRAY ASIGNACION expresion:exp END PTCOMA     {: grl.setTituloX(exp); :} 
-            | TITULOY     ACCESO CHAR_ARRAY ASIGNACION expresion:exp END PTCOMA     {: grl.setTituloY(exp); :}  
-            | X           ACCESO CHAR_ARRAY ASIGNACION expresion:exp END PTCOMA     {: grl.setEjeX(exp);    :}   
-            | Y           ACCESO DOUBLE     ASIGNACION expresion:exp END PTCOMA     {: grl.setEjeY(exp);    :} 
+atributos_line ::= TITULO ACCESO CHAR_ARRAY ASIGNACION expresion:exp END PTCOMA      {: grl.setTitulo(exp);  :}
+            | TITULOX     ACCESO CHAR_ARRAY ASIGNACION expresion:exp END PTCOMA      {: grl.setTituloX(exp); :} 
+            | TITULOY     ACCESO CHAR_ARRAY ASIGNACION expresion:exp END PTCOMA      {: grl.setTituloY(exp); :}  
+            | X           ACCESO CHAR_ARRAY ASIGNACION expresion:exp END PTCOMA      {: grl.setEjeX(exp);    :}   
+            | Y           ACCESO DOUBLE     ASIGNACION expresion:exp END PTCOMA      {: grl.setEjeY(exp);    :} 
 ;
 
-atributos_histogram ::= TITULO ACCESO CHAR_ARRAY ASIGNACION expresion:exp END PTCOMA      {: dh.setTitulo(exp);  :}
-            | VALUES           ACCESO DOUBLE     ASIGNACION expresion:exp END PTCOMA      {: dh.setValues(exp);  :}
+atributos_histogram ::= TITULO ACCESO CHAR_ARRAY ASIGNACION expresion:exp END PTCOMA  {: dh.setTitulo(exp);  :}
+            | VALUES           ACCESO DOUBLE     ASIGNACION expresion:exp END PTCOMA  {: dh.setValues(exp);  :}
 ;

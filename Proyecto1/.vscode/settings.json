@@ -3,6 +3,8 @@
         "lib/**/*.jar",
         "c:\\Users\\eliza\\Documents\\GitHub\\OLC1_Proyecto1_202000558\\Librerias\\java-cup-11b.jar",
         "c:\\Users\\eliza\\Documents\\GitHub\\OLC1_Proyecto1_202000558\\Librerias\\java-cup-11b-runtime.jar",
-        "c:\\Users\\eliza\\Documents\\GitHub\\OLC1_Proyecto1_202000558\\Librerias\\jflex-full-1.7.0.jar"
+        "c:\\Users\\eliza\\Documents\\GitHub\\OLC1_Proyecto1_202000558\\Librerias\\jflex-full-1.7.0.jar",
+        "c:\\Users\\eliza\\Documents\\GitHub\\OLC1_Proyecto1_202000558\\Librerias\\jcommon-1.0.23.jar",
+        "c:\\Users\\eliza\\Documents\\GitHub\\OLC1_Proyecto1_202000558\\Librerias\\jfreechart-1.0.19.jar"
     ]
 }

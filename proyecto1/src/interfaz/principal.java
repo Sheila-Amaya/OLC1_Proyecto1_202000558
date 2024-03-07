@@ -10,6 +10,12 @@ import java.awt.Desktop;
 import Token.TokenInfo;
 import proyecto1.GeneradorL;
 import proyecto1.GeneradorS;
+import Grafica.GraficaBarras;
+import Grafica.GraficaHistograma;
+import Grafica.GraficaLine;
+import Grafica.GraficaPie;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -20,10 +26,20 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.data.statistics.HistogramDataset;
+
 
 /**
  *
@@ -413,7 +429,12 @@ public class principal extends javax.swing.JFrame {
                 result += parse.salidas.get(i) + '\n';
             }
             this.jTextArea2.setText(result);
-
+            
+            //graficas
+            generarGB(parse.grB);
+            generarGP(parse.grP);
+            generarGL(parse.grL);
+            generarHist(parse.gH);
 
         } catch (Exception ex) {
             Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
@@ -426,13 +447,164 @@ public class principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
+    
+    public static void generarGB(List<Object> grB) {
+        for (Object obj : grB) {
+            if (obj instanceof GraficaBarras) {
+                GraficaBarras gb = (GraficaBarras) obj;
+                
+                // Crear un conjunto de datos
+                DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+                for (int i = 0; i < gb.getEjeXValues().length; i++) {
+                    dataset.addValue(gb.getEjeYValues()[i], gb.getTituloY(), gb.getEjeXValues()[i]);
+                }
+                
+                // Crear la gráfica de barras
+                JFreeChart chart = ChartFactory.createBarChart(
+                        gb.getTitulo(), // Título
+                        gb.getTituloX(), // Etiqueta del eje X
+                        gb.getTituloY(), // Etiqueta del eje Y
+                        dataset, // Datos
+                        PlotOrientation.VERTICAL, // Orientación de la gráfica
+                        true, // Mostrar leyenda
+                        true, // Usar tooltips
+                        false // Usar URLs
+                );
+
+                    // Crear el panel de la gráfica y agregarlo a la interfaz gráfica
+
+                ChartPanel chartPanel = new ChartPanel(chart);
+                chartPanel.setMouseWheelEnabled(true);
+                chartPanel.setPreferredSize(new Dimension(350,350));
+                
+                jPanel1.setLayout(new BorderLayout());
+                jPanel1.add(chartPanel, BorderLayout.CENTER);
+                jPanel1.setPreferredSize(jPanel1.getSize());
+                jPanel1.revalidate();
+                jPanel1.repaint();
+                
+            }
+        }
+    }
+
+    public static void generarGP(List<Object> grP) {
+        for (Object obj : grP) {
+            if (obj instanceof GraficaPie) {
+                GraficaPie gp = (GraficaPie) obj;
+                
+                // Crear un conjunto de datos
+                DefaultPieDataset dataset = new DefaultPieDataset();
+                for (int i = 0; i < gp.getValues().length; i++) {
+                    dataset.setValue(gp.getLabel()[i], gp.getValues()[i]);
+                }
+                
+                // Crear la gráfica de pie
+                JFreeChart chart = ChartFactory.createPieChart(
+                        gp.getTitulo(), // Título
+                        dataset, // Datos
+                        true, // Mostrar leyenda
+                        true, // Usar tooltips
+                        false // Usar URLs
+                );
+
+                // Crear el panel de la gráfica y agregarlo a la interfaz gráfica
+                ChartPanel chartPanel = new ChartPanel(chart);
+                chartPanel.setMouseWheelEnabled(true);
+                chartPanel.setPreferredSize(new Dimension(350,350));
+                                        
+                jPanel1.setLayout(new BorderLayout());
+                jPanel1.add(chartPanel, BorderLayout.CENTER);
+                jPanel1.setPreferredSize(jPanel1.getSize());
+                jPanel1.revalidate();
+                jPanel1.repaint();
+            }
+        }
+        
+    }
+
+    public static void generarGL(List<Object> grL) {
+        for (Object obj : grL) {
+            if (obj instanceof GraficaLine) {
+                GraficaLine gl = (GraficaLine) obj;
+                
+                // Crear un conjunto de datos
+                DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+                for (int i = 0; i < gl.getEjeXValues().length; i++) {
+                    dataset.addValue(gl.getEjeYValues()[i], "", gl.getEjeXValues()[i]);
+                }
+
+                // Crear la gráfica de línea
+                JFreeChart chart = ChartFactory.createLineChart(
+                        gl.getTitulo(), // Título
+                        gl.getTituloX(), // Etiqueta del eje X
+                        gl.getTituloY(), // Etiqueta del eje Y
+                        dataset, // Datos
+                        PlotOrientation.VERTICAL, // Orientación
+                        true, // Mostrar leyenda
+                        true, // Usar tooltips
+                        false // Usar URLs
+                );
+
+                // Crear el panel de la gráfica y agregarlo a la interfaz gráfica
+                ChartPanel chartPanel = new ChartPanel(chart);
+                chartPanel.setMouseWheelEnabled(true);
+                chartPanel.setPreferredSize(new Dimension(350,350));
+                                        
+                jPanel1.setLayout(new BorderLayout());
+                jPanel1.add(chartPanel, BorderLayout.CENTER);
+                jPanel1.setPreferredSize(jPanel1.getSize());
+                jPanel1.revalidate();
+                jPanel1.repaint();
+            }
+        }
+    }
+
+    public static void generarHist(List<Object> gH) {
+        for (Object obj : gH) {
+            if (obj instanceof GraficaHistograma) {
+                GraficaHistograma gh = (GraficaHistograma) obj;
+
+                // Crear el conjunto de datos para histograma
+                HistogramDataset dataset = new HistogramDataset();
+                double[] values = gh.getValor().stream().mapToDouble(i -> (double) ((int) i)).toArray();
+                dataset.addSeries("", values, gh.getFrecuencia().size());
+
+                // Crear el histograma
+                JFreeChart chart = ChartFactory.createHistogram(
+                        gh.getTitulo(), // Título
+                        "Valor", // Etiqueta del eje X
+                        "Frecuencia", // Etiqueta del eje Y
+                        dataset, // Datos
+                        PlotOrientation.VERTICAL, // Orientación
+                        true, // Mostrar leyenda
+                        true, // Usar tooltips
+                        false // Usar URLs
+                );
+
+                // Crear el panel de la gráfica y agregarlo a la interfaz gráfica
+                ChartPanel chartPanel = new ChartPanel(chart);
+                chartPanel.setMouseWheelEnabled(true);
+                chartPanel.setPreferredSize(new Dimension(350, 350));
+
+                jPanel1.setLayout(new BorderLayout());
+                jPanel1.add(chartPanel, BorderLayout.CENTER);
+                jPanel1.setPreferredSize(jPanel1.getSize());
+                jPanel1.revalidate();
+                jPanel1.repaint();
+            }
+        }
+    }
+    
+    
+    
+    
     public static void generarReporteHTML(ArrayList<Excepcion> errores) throws IOException {
         FileWriter fichero = null; //escribir el archivo
         PrintWriter pw = null; //escribir texto dentro del archivo
         
         try {
             
-            String path = "ReporteErrores.html";
+            String path = "C:/Users/eliza/Documents/GitHub/OLC1_Proyecto1_202000558/Reportes/ReporteErrores.html";
             fichero = new FileWriter(path);
             pw = new PrintWriter(fichero);
             
@@ -502,7 +674,7 @@ public class principal extends javax.swing.JFrame {
     PrintWriter pw = null;
 
     try {
-        String path = "ReporteTokens.html";
+        String path = "C:/Users/eliza/Documents/GitHub/OLC1_Proyecto1_202000558/Reportes/ReporteTokens.html";
         fichero = new FileWriter(path);
         pw = new PrintWriter(fichero);
 
@@ -617,7 +789,7 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
-    private javax.swing.JPanel jPanel1;
+    public static javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;

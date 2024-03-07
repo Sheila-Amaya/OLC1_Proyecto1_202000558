@@ -41,4 +41,15 @@ public class GraficaPie {
                 '}';
     }
 
+    public String getTitulo() {
+        return this.titulo;
+    }
+
+    public double[] getValues() {
+        return this.val;
+    }
+
+    public String[] getLabel() {
+        return this.labelValues;
+    }
 }

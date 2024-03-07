@@ -1,5 +1,6 @@
 package Grafica;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class GraficaBarras {
@@ -53,6 +54,26 @@ public class GraficaBarras {
                 ", ejeXValues=" + Arrays.toString(ejeXValues) +
                 ", ejeYValues=" + Arrays.toString(ejeYValues) +
                 '}';
+    }
+    
+    public String getTitulo() {
+        return this.titulo;
+    }
+
+    public String getTituloX() {
+        return this.tituloX;
+    }
+
+    public String getTituloY() {
+        return this.tituloY;
+    }
+
+    public String[] getEjeXValues() {
+        return this.ejeXValues;
+    }
+
+    public double[] getEjeYValues() {
+        return this.ejeYValues;
     }
 
 }

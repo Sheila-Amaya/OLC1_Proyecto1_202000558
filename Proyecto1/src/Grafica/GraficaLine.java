@@ -55,4 +55,24 @@ public class GraficaLine {
                 '}';
     }
 
+    public String getTitulo() {
+        return this.titulo;
+    }
+
+    public String getTituloX() {
+        return this.tituloX;
+    }
+
+    public String getTituloY() {
+        return this.tituloY;
+    }
+
+    public String[] getEjeXValues() {
+        return this.ejeXValues;
+    }
+
+    public double[] getEjeYValues() {
+        return this.ejeYValues;
+    }
+
 }
