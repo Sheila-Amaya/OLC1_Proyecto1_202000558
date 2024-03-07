@@ -15,6 +15,7 @@ import Grafica.GraficaHistograma;
 import Grafica.GraficaLine;
 import Grafica.GraficaPie;
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Dimension;
 
 import java.io.BufferedReader;
@@ -50,17 +51,22 @@ public class principal extends javax.swing.JFrame {
     /**
      * Creates new form principal
      */
+    private static List<ChartPanel> chartPanels = new ArrayList<>();
+    private static CardLayout cardLayout = new CardLayout();
     private String archivoActual;
+
     public principal() {
         initComponents();
-         
+        
         // Llamada a GeneradorS
         GeneradorS.main(new String[]{});
 
         // Llamada a GeneradorL
         GeneradorL.main(new String[]{});
+
     }
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -131,20 +137,21 @@ public class principal extends javax.swing.JFrame {
         jTextArea2.setRows(5);
         jScrollPane2.setViewportView(jTextArea2);
 
-        jButton2.setText("Anterior");
+        jButton2.setText("←");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Siguiente");
+        jButton3.setText("→");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        jPanel1.setLayout(new java.awt.CardLayout());
 
         jMenuBar2.setFont(new java.awt.Font("Segoe UI Symbol", 0, 12)); // NOI18N
 
@@ -234,16 +241,16 @@ public class principal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)
-                        .addGap(40, 40, 40))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -314,7 +321,7 @@ public class principal extends javax.swing.JFrame {
         // TODO add your handling code here:
             try {
         // Especifica la ruta completa al archivo HTML de la tabla de errores
-        String path = "ReporteTokens.html";
+        String path = "C:/Users/eliza/Documents/GitHub/OLC1_Proyecto1_202000558/Reportes/ReporteTokens.html";
 
         // Verifica si el archivo existe antes de intentar abrirlo
         File file = new File(path);
@@ -335,7 +342,7 @@ public class principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     try {
         // Especifica la ruta completa al archivo HTML de la tabla de errores
-        String path = "ReporteErrores.html";
+        String path = "C:/Users/eliza/Documents/GitHub/OLC1_Proyecto1_202000558/Reportes/ReporteErrores.html";
 
         // Verifica si el archivo existe antes de intentar abrirlo
         File file = new File(path);
@@ -436,6 +443,13 @@ public class principal extends javax.swing.JFrame {
             generarGL(parse.grL);
             generarHist(parse.gH);
 
+            // Añadir todos los ChartPanel de la lista al JPanel
+            for (ChartPanel cp : chartPanels) {
+                jPanel1.add(cp);
+            }
+
+            jPanel1.setLayout(cardLayout);
+
         } catch (Exception ex) {
             Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Error fatal en compilación de entrada: " + ex.getMessage());
@@ -446,6 +460,19 @@ public class principal extends javax.swing.JFrame {
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        //boton anterior
+        cardLayout.previous(jPanel1);
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        //boton Siguiente
+        cardLayout.next(jPanel1);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     
     public static void generarGB(List<Object> grB) {
@@ -471,19 +498,13 @@ public class principal extends javax.swing.JFrame {
                         false // Usar URLs
                 );
 
-                    // Crear el panel de la gráfica y agregarlo a la interfaz gráfica
-
+                    // Crear el panel de la gráfica 
                 ChartPanel chartPanel = new ChartPanel(chart);
                 chartPanel.setMouseWheelEnabled(true);
                 chartPanel.setPreferredSize(new Dimension(350,350));
+                chartPanels.add(chartPanel);
                 
-                jPanel1.setLayout(new BorderLayout());
-                jPanel1.add(chartPanel, BorderLayout.CENTER);
-                jPanel1.setPreferredSize(jPanel1.getSize());
-                jPanel1.revalidate();
-                jPanel1.repaint();
-                
-            }
+            } 
         }
     }
 
@@ -511,12 +532,8 @@ public class principal extends javax.swing.JFrame {
                 ChartPanel chartPanel = new ChartPanel(chart);
                 chartPanel.setMouseWheelEnabled(true);
                 chartPanel.setPreferredSize(new Dimension(350,350));
-                                        
-                jPanel1.setLayout(new BorderLayout());
-                jPanel1.add(chartPanel, BorderLayout.CENTER);
-                jPanel1.setPreferredSize(jPanel1.getSize());
-                jPanel1.revalidate();
-                jPanel1.repaint();
+                chartPanels.add(chartPanel);
+                
             }
         }
         
@@ -549,12 +566,8 @@ public class principal extends javax.swing.JFrame {
                 ChartPanel chartPanel = new ChartPanel(chart);
                 chartPanel.setMouseWheelEnabled(true);
                 chartPanel.setPreferredSize(new Dimension(350,350));
+                chartPanels.add(chartPanel);
                                         
-                jPanel1.setLayout(new BorderLayout());
-                jPanel1.add(chartPanel, BorderLayout.CENTER);
-                jPanel1.setPreferredSize(jPanel1.getSize());
-                jPanel1.revalidate();
-                jPanel1.repaint();
             }
         }
     }
@@ -585,17 +598,11 @@ public class principal extends javax.swing.JFrame {
                 ChartPanel chartPanel = new ChartPanel(chart);
                 chartPanel.setMouseWheelEnabled(true);
                 chartPanel.setPreferredSize(new Dimension(350, 350));
+                chartPanels.add(chartPanel);
 
-                jPanel1.setLayout(new BorderLayout());
-                jPanel1.add(chartPanel, BorderLayout.CENTER);
-                jPanel1.setPreferredSize(jPanel1.getSize());
-                jPanel1.revalidate();
-                jPanel1.repaint();
             }
         }
     }
-    
-    
     
     
     public static void generarReporteHTML(ArrayList<Excepcion> errores) throws IOException {
