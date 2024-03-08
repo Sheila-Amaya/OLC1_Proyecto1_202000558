@@ -7,7 +7,7 @@ ini ::= PROGRAM declaraciones:a END PROGRAM
 
 declaraciones ::= declaraciones declaracion
                | declaracion
-               | error {::}
+               | error
 ;
 
 declaracion ::= imprimir
@@ -29,7 +29,7 @@ declaracion_arreglo ::= ARR ":" tipo_dato "::" "@" ID INICIALIZACION "[" expresi
 ;
 
 
-op_aritmetica ::= VAR ":" ID:a DOUBLE "::" operacion:b END ";" {: RESULT = a; :}
+op_aritmetica ::= VAR ":" ID:a DOUBLE "::" operacion:b END ";" 
 ;
 
 

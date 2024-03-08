@@ -49,8 +49,7 @@ parser code
         Errores.add(new Excepcion("Sintáctico", "Error de sintaxis detectado. Se detectó: " + s.value, s.left + "", s.right + ""));
     } 
 
-    // Método al que se llama automáticamente ante algún error sintáctico
-    // en el que ya no es posible una recuperación de errores.
+    // Método al que se llama automáticamente ante algún error sintáctico, en el que ya no es posible una recuperación de errores.
     public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{ 
         System.out.println("Error sintactico irrecuperable en la Linea " + (s.left)+ " Columna "+s.right+". Componente " + s.value + " no reconocido."); 
     }
@@ -169,7 +168,7 @@ declaracion_arreglo ::= ARR DOS_PT tipo_dato ACCESO ARROBA ID:id INICIALIZACION 
 ;
 
 /*=========op aritmeticas=========*/
-op_aritmetica ::= VAR DOS_PT ID:a DOUBLE ACCESO operacion:b END PTCOMA {: RESULT = b;  :}
+op_aritmetica ::= VAR DOS_PT ID:id DOUBLE ACCESO operacion:exp END PTCOMA {: RESULT = exp;  vari.asignar(id , exp); :}
 ;
 
 /*=========funciones estadisticas=========*/
@@ -193,7 +192,7 @@ expresion ::= operacion:a                   {:RESULT = a;                       
 ;
 
 expresiones ::= expresion:b                   {: RESULT = b;     :}
-            | expresiones:b COMA expresion:e  {: RESULT = b + " , " + e; :}
+            | expresiones:b COMA expresion:e  {: RESULT = b + "," + e; :}
             | /* */
 ;
 
@@ -203,12 +202,12 @@ tipo_dato ::= DOUBLE:d      {: RESULT = d; :}
 ;
 
 
-operacion ::= SUM PAR_IZQ expresion:a COMA expresion:b PAR_DER {: RESULT = Ari.sumArit(a, b); :}
-            | RES PAR_IZQ expresion:a COMA expresion:b PAR_DER {: RESULT = Ari.resArit(a, b); :} 
-            | MUL PAR_IZQ expresion:a COMA expresion:b PAR_DER {: RESULT = Ari.mulArit(a, b); :} 
-            | DIV PAR_IZQ expresion:a COMA expresion:b PAR_DER {: RESULT = Ari.divArit(a, b); :} 
-            | MOD PAR_IZQ expresion:a COMA expresion:b PAR_DER {: RESULT = Ari.modArit(a, b); :} 
-;
+operacion ::= SUM PAR_IZQ expresiones:b PAR_DER  {: RESULT = Ari.realizarOperacion(b, "SUM"); :}
+            | RES PAR_IZQ expresiones:b PAR_DER  {: RESULT = Ari.realizarOperacion(b, "RES"); :}
+            | MUL PAR_IZQ expresiones:b PAR_DER  {: RESULT = Ari.realizarOperacion(b, "MUL"); :} 
+            | DIV PAR_IZQ expresiones:b PAR_DER  {: RESULT = Ari.realizarOperacion(b, "DIV"); :}  
+            | MOD PAR_IZQ expresiones:b PAR_DER  {: RESULT = Ari.realizarOperacion(b, "MOD"); :} 
+            ;
 
 /*=========graficacion=========*/
 funcion_graficacion ::= BAR     PAR_IZQ graficaBarras   EXEC BAR       END PTCOMA PAR_DER END PTCOMA {: grb.build(); grB.add(grb); :}

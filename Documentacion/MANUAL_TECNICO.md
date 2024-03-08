@@ -68,7 +68,7 @@ parser code
 
 ```
 
-3. clase Excepcion
+3. clase Excepcion:
     *Se utiliza para representar errores o excepciones . Permite almacenar información sobre el tipo de error, una descripción detallada y la ubicación del error (línea y columna). El método toString() proporciona una representación legible de la excepción que se puede utilizar para mostrar mensajes de error al usuario o para registrar información de errores en el programa.*
     
 

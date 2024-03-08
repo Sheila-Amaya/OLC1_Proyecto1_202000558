@@ -364,7 +364,7 @@ public class principal extends javax.swing.JFrame {
         //GUARDAR
     if (archivoActual != null) {
         try (FileWriter writer = new FileWriter(archivoActual);
-             BufferedWriter bw = new BufferedWriter(writer)) {
+            BufferedWriter bw = new BufferedWriter(writer)) {
             // Escribe el contenido del jTextArea1 en el archivo
             bw.write(jTextArea1.getText());
             JOptionPane.showMessageDialog(this, "Contenido guardado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
