@@ -11,12 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 import Errores.Excepcion;
 import Instruccion.Aritmetica;
+import Instruccion.Estadistica;
 import Instruccion.Variable;
 import Instruccion.Imprimir;
 import Grafica.GraficaBarras;
 import Grafica.GraficaPie;
 import Grafica.GraficaLine;
 import Grafica.DataHistograma;
+import TablaSimbolos.TablaInfo;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -486,8 +488,11 @@ public class Sintactico extends java_cup.runtime.lr_parser {
 
    
 
+    //clases, objetos, variables, listas, etc.
     Variable vari = new Variable();
     Aritmetica Ari = new Aritmetica();
+    Estadistica Est = new Estadistica();
+    Imprimir imp = new Imprimir();
 
     public ArrayList<Object> grB = new ArrayList<Object>();
     public ArrayList<Object> grP = new ArrayList<Object>();
@@ -500,7 +505,7 @@ public class Sintactico extends java_cup.runtime.lr_parser {
     public DataHistograma dh = new DataHistograma();
 
 
-    // clases, objetos, variables, listas, etc.
+    // salida consola
     public List<String> salidas = new ArrayList<String>();
 
     // errores
@@ -566,7 +571,7 @@ class CUP$Sintactico$actions {
 		int aleft = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-2)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-2)).right;
 		String a = (String)((java_cup.runtime.Symbol) CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-2)).value;
-		RESULT = a; 
+
               CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("ini",0, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-3)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;
@@ -638,7 +643,7 @@ class CUP$Sintactico$actions {
           case 9: // declaracion ::= funcion_graficacion 
             {
               String RESULT =null;
-		  
+
               CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("declaracion",2, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;
@@ -650,7 +655,7 @@ class CUP$Sintactico$actions {
 		int expleft = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-2)).left;
 		int expright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-2)).right;
 		String exp = (String)((java_cup.runtime.Symbol) CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-2)).value;
-		 salidas.add(exp); 
+		 RESULT = exp; salidas.add(exp); 
               CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("imprimir",3, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-6)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;
@@ -659,7 +664,13 @@ class CUP$Sintactico$actions {
           case 11: // imprimir ::= CONSOLE ACCESO COLUMN ASIGNACION expresiones ASIGNA expresiones END PTCOMA 
             {
               String RESULT =null;
-
+		int idleft = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-4)).left;
+		int idright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-4)).right;
+		String id = (String)((java_cup.runtime.Symbol) CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-4)).value;
+		int expleft = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-2)).left;
+		int expright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-2)).right;
+		String exp = (String)((java_cup.runtime.Symbol) CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-2)).value;
+		 salidas.add(imp.imprimirValores(id, exp)); 
               CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("imprimir",3, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-8)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;
@@ -686,6 +697,9 @@ class CUP$Sintactico$actions {
           case 13: // declaracion_arreglo ::= ARR DOS_PT tipo_dato ACCESO ARROBA ID INICIALIZACION COR_IZQ expresiones COR_DER END PTCOMA 
             {
               String RESULT =null;
+		int datoleft = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-9)).left;
+		int datoright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-9)).right;
+		String dato = (String)((java_cup.runtime.Symbol) CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-9)).value;
 		int idleft = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-6)).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-6)).right;
 		String id = (String)((java_cup.runtime.Symbol) CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-6)).value;
@@ -719,7 +733,7 @@ class CUP$Sintactico$actions {
 		int expleft = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).left;
 		int expright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).right;
 		String exp = (String)((java_cup.runtime.Symbol) CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).value;
-
+		 RESULT = Est.operacionEstadistica(exp, "media");    
               CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("funcion_estadistica",11, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-3)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;
@@ -731,7 +745,7 @@ class CUP$Sintactico$actions {
 		int expleft = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).left;
 		int expright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).right;
 		String exp = (String)((java_cup.runtime.Symbol) CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).value;
-
+		 RESULT = Est.operacionEstadistica(exp, "mediana");  
               CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("funcion_estadistica",11, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-3)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;
@@ -743,7 +757,7 @@ class CUP$Sintactico$actions {
 		int expleft = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).left;
 		int expright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).right;
 		String exp = (String)((java_cup.runtime.Symbol) CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).value;
-
+		 RESULT = Est.operacionEstadistica(exp, "moda");     
               CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("funcion_estadistica",11, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-3)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;
@@ -755,7 +769,7 @@ class CUP$Sintactico$actions {
 		int expleft = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).left;
 		int expright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).right;
 		String exp = (String)((java_cup.runtime.Symbol) CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).value;
-
+		 RESULT = Est.operacionEstadistica(exp, "varianza"); 
               CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("funcion_estadistica",11, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-3)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;
@@ -767,7 +781,7 @@ class CUP$Sintactico$actions {
 		int expleft = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).left;
 		int expright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).right;
 		String exp = (String)((java_cup.runtime.Symbol) CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).value;
-
+		 RESULT = Est.operacionEstadistica(exp, "max");      
               CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("funcion_estadistica",11, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-3)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;
@@ -779,7 +793,7 @@ class CUP$Sintactico$actions {
 		int expleft = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).left;
 		int expright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).right;
 		String exp = (String)((java_cup.runtime.Symbol) CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).value;
-
+		 RESULT = Est.operacionEstadistica(exp, "min");      
               CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("funcion_estadistica",11, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-3)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;
@@ -926,7 +940,7 @@ class CUP$Sintactico$actions {
 		int dleft = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()).left;
 		int dright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()).right;
 		String d = (String)((java_cup.runtime.Symbol) CUP$Sintactico$stack.peek()).value;
-		 RESULT = d; 
+		 RESULT = "variable double"; 
               CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("tipo_dato",6, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;
@@ -938,7 +952,7 @@ class CUP$Sintactico$actions {
 		int cleft = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()).left;
 		int cright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()).right;
 		String c = (String)((java_cup.runtime.Symbol) CUP$Sintactico$stack.peek()).value;
-		 RESULT = c; 
+		 RESULT = "variable string"; 
               CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("tipo_dato",6, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;

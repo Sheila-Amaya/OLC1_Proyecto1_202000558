@@ -9,13 +9,15 @@ import java.util.List;
 import Errores.Excepcion;
 
 import Instruccion.Aritmetica;
+import Instruccion.Estadistica;
 import Instruccion.Variable;
 import Instruccion.Imprimir;  
 import Grafica.GraficaBarras;   
 import Grafica.GraficaPie;  
 import Grafica.GraficaLine;     
-import Grafica.DataHistograma;                                         
+import Grafica.DataHistograma;   
 
+import TablaSimbolos.TablaInfo;
 
 
 /* 2. código para el parser, variables, métodos */
@@ -24,8 +26,11 @@ import Grafica.DataHistograma;
 parser code
 {:   
 
+    //clases, objetos, variables, listas, etc.
     Variable vari = new Variable();
     Aritmetica Ari = new Aritmetica();
+    Estadistica Est = new Estadistica();
+    Imprimir imp = new Imprimir();
 
     public ArrayList<Object> grB = new ArrayList<Object>();
     public ArrayList<Object> grP = new ArrayList<Object>();
@@ -38,7 +43,7 @@ parser code
     public DataHistograma dh = new DataHistograma();
 
 
-    // clases, objetos, variables, listas, etc.
+    // salida consola
     public List<String> salidas = new ArrayList<String>();
 
     // errores
@@ -141,7 +146,7 @@ non terminal String datosHistogram;
 /* 6. Reglas de producción para expresiones */
 start with ini;
 
-ini ::= PROGRAM declaraciones:a END PROGRAM {:RESULT = a; :}
+ini ::= PROGRAM declaraciones:a END PROGRAM 
 ;
 
 declaraciones ::= declaraciones declaracion
@@ -153,18 +158,18 @@ declaracion ::= imprimir
             | declaracion_variable
             | declaracion_arreglo
             | op_aritmetica
-            | funcion_graficacion   {:  :}
+            | funcion_graficacion   
 ; 
 
-imprimir ::= CONSOLE ACCESO PRINT ASIGNACION expresiones:exp END PTCOMA {: salidas.add(exp); :}
-            | CONSOLE ACCESO COLUMN ASIGNACION expresiones ASIGNA expresiones END PTCOMA
+imprimir ::=  CONSOLE ACCESO PRINT  ASIGNACION expresiones:exp END PTCOMA {: RESULT = exp; salidas.add(exp); :}
+            | CONSOLE ACCESO COLUMN ASIGNACION expresiones:id ASIGNA expresiones:exp END PTCOMA {: salidas.add(imp.imprimirValores(id, exp)); :}
 ;
 
 declaracion_variable ::= VAR DOS_PT tipo_dato:a ACCESO ID:id INICIALIZACION expresion:exp END PTCOMA {: vari.asignar(id , exp);  :}
 ;
 
 
-declaracion_arreglo ::= ARR DOS_PT tipo_dato ACCESO ARROBA ID:id INICIALIZACION COR_IZQ expresiones:exp COR_DER END PTCOMA {: vari.asignar(id , exp); :}
+declaracion_arreglo ::= ARR DOS_PT tipo_dato:dato ACCESO ARROBA ID:id INICIALIZACION COR_IZQ expresiones:exp COR_DER END PTCOMA {: vari.asignar(id , exp); :}
 ;
 
 /*=========op aritmeticas=========*/
@@ -172,12 +177,12 @@ op_aritmetica ::= VAR DOS_PT ID:id DOUBLE ACCESO operacion:exp END PTCOMA {: RES
 ;
 
 /*=========funciones estadisticas=========*/
-funcion_estadistica ::= MEDIA PAR_IZQ expresion:exp PAR_DER
-                | MEDIANA     PAR_IZQ expresion:exp PAR_DER
-                | MODA        PAR_IZQ expresion:exp PAR_DER
-                | VARIANZA    PAR_IZQ expresion:exp PAR_DER
-                | MAX         PAR_IZQ expresion:exp PAR_DER
-                | MIN         PAR_IZQ expresion:exp PAR_DER
+funcion_estadistica ::= MEDIA PAR_IZQ expresion:exp PAR_DER {: RESULT = Est.operacionEstadistica(exp, "media");    :}
+                | MEDIANA     PAR_IZQ expresion:exp PAR_DER {: RESULT = Est.operacionEstadistica(exp, "mediana");  :}
+                | MODA        PAR_IZQ expresion:exp PAR_DER {: RESULT = Est.operacionEstadistica(exp, "moda");     :}
+                | VARIANZA    PAR_IZQ expresion:exp PAR_DER {: RESULT = Est.operacionEstadistica(exp, "varianza"); :}
+                | MAX         PAR_IZQ expresion:exp PAR_DER {: RESULT = Est.operacionEstadistica(exp, "max");      :}
+                | MIN         PAR_IZQ expresion:exp PAR_DER {: RESULT = Est.operacionEstadistica(exp, "min");      :}
 ; 
 
 /*=========expresiones=========*/
@@ -197,8 +202,8 @@ expresiones ::= expresion:b                   {: RESULT = b;     :}
 ;
 
 
-tipo_dato ::= DOUBLE:d      {: RESULT = d; :}
-            | CHAR_ARRAY:c  {: RESULT = c; :}
+tipo_dato ::= DOUBLE:d      {: RESULT = "variable double"; :}
+            | CHAR_ARRAY:c  {: RESULT = "variable string"; :}
 ;
 
 

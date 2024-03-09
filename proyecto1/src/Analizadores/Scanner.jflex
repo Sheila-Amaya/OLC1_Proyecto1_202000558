@@ -130,13 +130,12 @@ comentarioSimple = "!"([^\n]*)?
 
 \n {yychar=1;}
 
-{EVITAR} {}
+{EVITAR}                {}
 {comentarioMultilineal} {}
-{comentarioSimple} {}
+{comentarioSimple}      {}
 
 //Recuperar errores lexicos  
 . {
     //guarda los errores lexicos
-    System.out.println("Este es un error lexico: "+yytext()+ ", en la linea: "+yyline+", en la columna: "+yychar);
     Errores.add(new Excepcion("Lexico","Caracter no valido: "+ yytext(), yyline+"", yychar+""));
 }
