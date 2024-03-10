@@ -28,7 +28,7 @@ declaracion_variable ::= VAR ":" tipo_dato "::" ID "<-" expresion END ";"
 declaracion_arreglo ::= ARR ":" tipo_dato "::" "@" ID "<-" "[" expresiones "]" END ";" 
 ;
 
-op_aritmetica ::= VAR ":" ID:a DOUBLE "::" operacion:b END ";" 
+op_aritmetica ::= VAR ":" ID DOUBLE "::" operacion END ";" 
 ;
 
 
