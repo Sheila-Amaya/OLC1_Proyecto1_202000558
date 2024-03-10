@@ -1,4 +1,5 @@
 package TablaSimbolos;
+import java.util.ArrayList;
 
 public class TablaInfo {
     private String nombre;
@@ -6,6 +7,8 @@ public class TablaInfo {
     private String valor;
     private int linea;
     private int columna;
+    
+    private final ArrayList<TablaInfo> tabla;
 
     public TablaInfo(String nombre, String tipo, String valor, int linea, int columna) {
         this.nombre = nombre;
@@ -13,6 +16,7 @@ public class TablaInfo {
         this.valor = valor;
         this.linea = linea;
         this.columna = columna;
+        this.tabla = new ArrayList<>();
     }
 
     public String getNombre() {
@@ -35,15 +39,28 @@ public class TablaInfo {
         return columna;
     }
 
-        @Override
-    public String toString() {
-        return "TablaInfo{" +
-                "nombre='" + nombre + '\'' +
-                ", tipo='" + tipo + '\'' +
-                ", valor='" + valor + '\'' +
-                ", linea=" + linea +
-                ", columna=" + columna +
-                '}';
+    public ArrayList<TablaInfo> getTabla() {
+        return tabla;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public void setValor(String valor) {
+        this.valor = valor;
+    }
+
+    public void setLinea(int linea) {
+        this.linea = linea;
+    }
+
+    public void setColumna(int columna) {
+        this.columna = columna;
     }
 
 }

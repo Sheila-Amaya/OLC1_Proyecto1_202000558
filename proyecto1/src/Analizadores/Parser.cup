@@ -46,6 +46,7 @@ parser code
     // salida consola
     public List<String> salidas = new ArrayList<String>();
 
+    public ArrayList<TablaInfo> tabla = new ArrayList<TablaInfo>();
     // errores
     public ArrayList<Excepcion> Errores = new ArrayList();
 
@@ -62,6 +63,12 @@ parser code
     public ArrayList<Excepcion> getErrores(){
         return Errores;
     }
+
+    public ArrayList<TablaInfo> getTabla(){
+        return tabla;
+    }
+
+
 :}
 
 /* 3. terminales */
@@ -165,11 +172,13 @@ imprimir ::=  CONSOLE ACCESO PRINT  ASIGNACION expresiones:exp END PTCOMA {: RES
             | CONSOLE ACCESO COLUMN ASIGNACION expresiones:id ASIGNA expresiones:exp END PTCOMA {: salidas.add(imp.imprimirValores(id, exp)); :}
 ;
 
-declaracion_variable ::= VAR DOS_PT tipo_dato:a ACCESO ID:id INICIALIZACION expresion:exp END PTCOMA {: vari.asignar(id , exp);  :}
+declaracion_variable ::= VAR DOS_PT tipo_dato:dato ACCESO ID:id INICIALIZACION expresion:exp END PTCOMA {: vari.asignar(id , exp);  
+    tabla.add(new TablaInfo(id, dato, exp , 0, 0)); :}
 ;
 
 
-declaracion_arreglo ::= ARR DOS_PT tipo_dato:dato ACCESO ARROBA ID:id INICIALIZACION COR_IZQ expresiones:exp COR_DER END PTCOMA {: vari.asignar(id , exp); :}
+declaracion_arreglo ::= ARR DOS_PT tipo_dato:dato ACCESO ARROBA ID:id INICIALIZACION COR_IZQ expresiones:exp COR_DER END PTCOMA {: vari.asignar(id , exp); 
+    tabla.add(new TablaInfo(id, dato, exp , 0, 0)); :}
 ;
 
 /*=========op aritmeticas=========*/

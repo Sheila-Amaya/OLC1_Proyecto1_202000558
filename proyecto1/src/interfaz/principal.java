@@ -10,14 +10,15 @@ import java.awt.Desktop;
 import Token.TokenInfo;
 import proyecto1.GeneradorL;
 import proyecto1.GeneradorS;
+
 import Grafica.GraficaBarras;
 import Grafica.GraficaHistograma;
 import Grafica.GraficaLine;
 import Grafica.GraficaPie;
-import java.awt.BorderLayout;
+import TablaSimbolos.TablaInfo;
+
 import java.awt.CardLayout;
 import java.awt.Dimension;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -26,8 +27,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -40,6 +44,9 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.statistics.HistogramDataset;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 
 /**
@@ -418,6 +425,7 @@ public class principal extends javax.swing.JFrame {
         Analizadores.Sintactico parse;
         ArrayList<Excepcion> errores = new ArrayList(); //agregar errores
         ArrayList<TokenInfo> tokens = new ArrayList();
+        ArrayList<TablaInfo> tabla = new ArrayList();
         
         try {
 
@@ -427,9 +435,12 @@ public class principal extends javax.swing.JFrame {
             
             errores.addAll(scanner.Errores); //errores lexicos
             errores.addAll(parse.getErrores()); //errores sintacticos
-            generarReporteHTML(errores); 
-            tokens.addAll(scanner.getTokens());
-            generarReporteTokensHTML(tokens);
+            generarReporteHTML(errores);   //generar reporte de errores lexicos y sintacticos
+            tokens.addAll(scanner.getTokens()); 
+            generarReporteTokensHTML(tokens); //generar reporte de tokens
+
+            tabla = parse.getTabla();
+            generarTablaSimbolos(tabla,tokens);  //generar tabla de simbolos
 
             String result = "";
             for (int i = 0; i < parse.salidas.size(); i++) {
@@ -462,6 +473,25 @@ public class principal extends javax.swing.JFrame {
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
         // TODO add your handling code here:
+        //boton tabla de simbolos
+        try {
+            // Especifica la ruta completa al archivo HTML de la tabla de errores
+            String path = "C:/Users/eliza/Documents/GitHub/OLC1_Proyecto1_202000558/Reportes/ReporteTabla.html";
+    
+            // Verifica si el archivo existe antes de intentar abrirlo
+            File file = new File(path);
+            if (file.exists()) {
+                Desktop desktop = Desktop.getDesktop();
+                desktop.open(file);
+            } else {
+                JOptionPane.showMessageDialog(this, "El archivo de la tabla de simbolos no existe.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al abrir el archivo de la tabla de simbolos.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -610,11 +640,100 @@ public class principal extends javax.swing.JFrame {
     public static void limpiarChartPanels() {
         chartPanels.clear();
     }
+
+
+public static void generarTablaSimbolos(ArrayList<TablaInfo> tabla, ArrayList<TokenInfo> tokens) { 
+    Set<String> addedSymbols = new HashSet<>();
+    for (TokenInfo token : tokens) {
+        for (TablaInfo tablaInfo : tabla) {
+            if (!addedSymbols.contains(tablaInfo.getNombre()) && tablaInfo.getNombre().equals(token.getLexema())) {
+                tablaInfo.setLinea(token.getLinea());
+                tablaInfo.setColumna(token.getColumna());
+                
+                // Imprimir los datos de tablaInfo en la consola
+                System.out.println( tablaInfo.getNombre() +tablaInfo.getTipo() + tablaInfo.getValor() + ", Linea: " + tablaInfo.getLinea() + ", Columna: " + tablaInfo.getColumna());
+                
+                addedSymbols.add(tablaInfo.getNombre());
+                break;
+            }
+        }
+    }
+    FileWriter fichero = null; //escribir el archivo
+    PrintWriter pw = null; //escribir texto dentro del archivo
     
+    try {
+        
+        String path = "C:/Users/eliza/Documents/GitHub/OLC1_Proyecto1_202000558/Reportes/ReporteTabla.html";
+        fichero = new FileWriter(path);
+        pw = new PrintWriter(fichero);
+        
+        //Comenzamos a escribir el html
+        pw.println("<html>");
+        pw.println("<head>");
+        pw.println("<title>TABLA DE SIMBOLOS</title>");
+        pw.println("<link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN\" crossorigin=\"anonymous\">");
+        pw.println("</head>");
+        pw.println("<body>");
+        pw.println("<div class=\"container\">"); // Agregamos una clase container de Bootstrap
+        pw.println("<h1 class=\"mt-5\">Tabla de Simbolos</h1>"); // Agregamos clases de margen superior (mt-5) de Bootstrap
+        pw.println("<br></br>");
+
+         // Agregamos la tabla con clases de Bootstrap
+        pw.println("<table class=\"table\">");
+        pw.println("<thead class=\"thead-dark\">"); // Aplicamos la clase thead-dark para el encabezado oscuro
+        pw.println("<tr>");
+        pw.println("<th scope=\"col\">#</th>"); // New column for numbering
+        pw.println("<th scope=\"col\">NOMBRE</th>");
+        pw.println("<th scope=\"col\">TIPO</th>");
+        pw.println("<th scope=\"col\">VALOR</th>");
+        pw.println("<th scope=\"col\">FILA</th>");
+        pw.println("<th scope=\"col\">COLUMNA</th>");
+        pw.println("</tr>");
+        pw.println("</thead>");
+        pw.println("<tbody>");
+
+        // Iteramos sobre la lista de tabla de simbolos y los agregamos a la tabla
+        int count = 1; // Initialize counter
+        for (TablaInfo tablaInfo : tabla) {
+            pw.println("<tr>");
+            pw.println("<td>" + count + "</td>"); // Print counter value
+            pw.println("<td>" + tablaInfo.getNombre() + "</td>");
+            pw.println("<td>" + tablaInfo.getTipo() + "</td>");
+            pw.println("<td>" + tablaInfo.getValor() + "</td>");
+            pw.println("<td>" + tablaInfo.getLinea() + "</td>");
+            pw.println("<td>" + tablaInfo.getColumna() + "</td>");
+            pw.println("</tr>");
+            count++; // Increment counter
+        }
+
+            pw.println("</tbody>");
+            pw.println("</table>");
+
+            // Continuamos con el resto del contenido HTML
+            pw.println("</div>");
+            pw.println("</body>");
+            pw.println("</html>");
+            //Desktop.getDesktop().open(new File(path));  //abrir archivo despues de generalo
+            
+
+        } catch (Exception e) {
+        } finally {
+            try {
+                if (fichero != null) {
+                    fichero.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+}
+
+
     public static void generarReporteHTML(ArrayList<Excepcion> errores) throws IOException {
         FileWriter fichero = null; //escribir el archivo
         PrintWriter pw = null; //escribir texto dentro del archivo
-        
+
         try {
             
             String path = "C:/Users/eliza/Documents/GitHub/OLC1_Proyecto1_202000558/Reportes/ReporteErrores.html";
