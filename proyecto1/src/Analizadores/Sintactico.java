@@ -696,8 +696,7 @@ class CUP$Sintactico$actions {
 		int expright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-2)).right;
 		String exp = (String)((java_cup.runtime.Symbol) CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-2)).value;
 		 vari.asignar(id , exp);  
-    tabla.add(new TablaInfo(id, dato, exp , 0, 0));
-
+    tabla.add(new TablaInfo(id, dato, exp , 0, 0)); 
               CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("declaracion_variable",7, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-8)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;
@@ -716,8 +715,7 @@ class CUP$Sintactico$actions {
 		int expright = ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-3)).right;
 		String exp = (String)((java_cup.runtime.Symbol) CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-3)).value;
 		 vari.asignar(id , exp); 
-    tabla.add(new TablaInfo(id, dato, exp , 0, 0));
-
+    tabla.add(new TablaInfo(id, dato, exp , 0, 0)); 
               CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("declaracion_arreglo",8, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-11)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }
           return CUP$Sintactico$result;

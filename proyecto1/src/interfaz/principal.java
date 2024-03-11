@@ -651,7 +651,7 @@ public static void generarTablaSimbolos(ArrayList<TablaInfo> tabla, ArrayList<To
                 tablaInfo.setColumna(token.getColumna());
                 
                 // Imprimir los datos de tablaInfo en la consola
-                System.out.println( tablaInfo.getNombre() +tablaInfo.getTipo() + tablaInfo.getValor() + ", Linea: " + tablaInfo.getLinea() + ", Columna: " + tablaInfo.getColumna());
+                //System.out.println( tablaInfo.getNombre() +tablaInfo.getTipo() + tablaInfo.getValor() + ", Linea: " + tablaInfo.getLinea() + ", Columna: " + tablaInfo.getColumna());
                 
                 addedSymbols.add(tablaInfo.getNombre());
                 break;
