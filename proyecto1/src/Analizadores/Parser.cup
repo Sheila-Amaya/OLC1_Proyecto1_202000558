@@ -72,7 +72,7 @@ parser code
 :}
 
 /* 3. terminales */
-terminal String PTCOMA, PAR_IZQ, PAR_DER, LLAV_IZQ, LLAV_DER, PT, DOS_PT, COMA, S, COR_IZQ, COR_DER;
+terminal String PTCOMA, PAR_IZQ, PAR_DER, LLAV_IZQ, LLAV_DER, PT, DOS_PT, COMA, COR_IZQ, COR_DER;
 terminal String ASIGNACION, ACCESO, ASIGNA;
 terminal String INICIALIZACION, ARROBA;
 
@@ -195,14 +195,14 @@ funcion_estadistica ::= MEDIA PAR_IZQ expresion:exp PAR_DER {: RESULT = Est.oper
 ; 
 
 /*=========expresiones=========*/
-expresion ::= operacion:a                   {:RESULT = a;                         :}
-        | ID:id                             {:RESULT = vari.obtener(id);          :}
-        | CADENA:str                        {:RESULT = str.replace("\"", "");     :}
-        | NUMERO:num                        {:RESULT = num;                       :}
-        | PAR_IZQ expresion:exp PAR_DER     {:RESULT = exp;                       :}
-        | funcion_estadistica:a             {:RESULT = a;                         :}
-        | COR_IZQ expresiones:exp COR_DER   {:RESULT = exp;                       :}
-        | ARROBA:a ID:id                    {:RESULT = vari.obtener(id);          :}
+expresion ::= operacion:a                   {:RESULT = a;                                           :}
+        | ID:id                             {:RESULT = vari.obtener(id.replace("\"", ""));          :}
+        | CADENA:str                        {:RESULT = str.replace("\"", "");                       :}
+        | NUMERO:num                        {:RESULT = num;                                         :}
+        | PAR_IZQ expresion:exp PAR_DER     {:RESULT = exp;                                         :}
+        | funcion_estadistica:a             {:RESULT = a;                                           :}
+        | COR_IZQ expresiones:exp COR_DER   {:RESULT = exp;                                         :}
+        | ARROBA:a ID:id                    {:RESULT = vari.obtener(id);                            :}
 ;
 
 expresiones ::= expresion:b                   {: RESULT = b;     :}

@@ -117,7 +117,6 @@ comentarioSimple = "!"([^\n]*)?
 "::" {TokenInfo token = new TokenInfo(yytext(), "ACCESO", yyline, yychar);  tokens.add(token); return new Symbol(sym.ACCESO,yyline,yychar, yytext());}
 "="  {TokenInfo token = new TokenInfo(yytext(), "ASIGNACION", yyline, yychar);  tokens.add(token); return new Symbol(sym.ASIGNACION,yyline,yychar, yytext());}
 ","  {TokenInfo token = new TokenInfo(yytext(), "COMA", yyline, yychar);  tokens.add(token); return new Symbol(sym.COMA,yyline,yychar, yytext());} 
-"$"  {TokenInfo token = new TokenInfo(yytext(), "S", yyline, yychar);  tokens.add(token); return new Symbol(sym.S,yyline,yychar,yytext());}
 
 "<-"  {TokenInfo token = new TokenInfo(yytext(), "INICIALIZACION", yyline, yychar);  tokens.add(token); return new Symbol(sym.INICIALIZACION,yyline,yychar,yytext());}
 "@"   {TokenInfo token = new TokenInfo(yytext(), "ARROBA", yyline, yychar);  tokens.add(token); return new Symbol(sym.ARROBA,yyline,yychar,yytext());}
